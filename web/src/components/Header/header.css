@@ -1,0 +1,35 @@
+#lobby section {
+    width: 74vw;
+    display: flex;
+    flex-direction: column;
+    align-self: flex-end;
+}
+
+section header {
+    width: 100%;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: flex-end;
+}
+
+section header p {
+    color: #5E5E5E;
+    font-size: 30px;
+}
+
+section header img {
+    width: 50px;
+    height: 50px;
+    border-radius: 35px;
+    margin: 5px;
+}
+
+
+.header-link-button {
+    display: flex;
+    flex-direction: row;
+    text-decoration: none;
+    align-items: center;
+    cursor: pointer;
+}

@@ -1,0 +1,16 @@
+.create-quiz-form {
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+    max-width: 400px;
+    align-items: center;
+    justify-self: center;
+    align-self: center;
+    height: 100%;
+}
+
+.create-quiz-form img {
+    width: 200px;
+    height: 200px;
+    border-radius: 125px;
+}

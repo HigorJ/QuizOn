@@ -1,0 +1,22 @@
+.lobby-content .quiz-image {
+    width: 240px;
+    height: 240px;
+    border-radius: 120px;
+}
+
+.lobby-content h1.quiz-title {
+    color: #474747;  
+    font-size: 36px;
+}
+
+.lobby-content p.quiz-description {
+    font-size: 18px;
+    color: #474747;  
+}
+
+.quiz-buttons {
+    width: 100%;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-evenly;
+}

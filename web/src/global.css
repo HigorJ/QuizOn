@@ -1,0 +1,63 @@
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body {
+  background-color: #E5E5E5;
+  font-family: "Secular One";
+}
+
+.styled-link {
+  height: 25px;
+  color: #001C7E;
+  font-size: 16px;
+  text-decoration: none;
+}
+
+.styled-link:hover {
+  color: #021455;
+  font-size: 18px;
+  text-decoration: none;
+}
+
+button {
+  width: 250px;
+  height: 50px;
+  border-radius: 15px;
+  background-color: #2480D6;
+  border: none;
+  font-size: 18px;
+  color: #E1E1E1;
+  cursor: pointer;
+  outline: none;
+  box-shadow: 2px 2px rgba(0, 0, 0, 0.089);
+
+  display: flex;
+  justify-content: center;
+  align-items: center;
+
+  transition: all .2s ease-in-out;
+}
+
+button:hover {
+  background-color: #1d64a7;
+}
+
+.button-circle {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+
+  width: 50px;
+  height: 50px;
+  background-color: #2480D6;
+  border-radius: 25px;
+}
+
+.error-message {
+  color: #B22222;
+  font-size: 18px;
+}

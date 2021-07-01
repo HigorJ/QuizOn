@@ -1,0 +1,39 @@
+.quiz-question-title {
+    color: #5E5E5E;
+    font-size: 32px;
+}
+
+.quiz-question-image {
+    width: 550px;
+    height: 230px;
+    border-radius: 50px;
+}
+
+.option-field {
+    width: 450px;
+    background-color: #2480D6;
+    margin: 5px;
+    border-radius: 20px;
+    padding: 10px;
+    display: flex;
+    flex-direction: row;
+    color: #C9D5DF;
+    font-size: 18px;
+    cursor: pointer;
+
+    transition: all .2s ease-in-out;
+}
+
+.option-field:hover {
+    transform: scale(1.05);
+}
+
+.option-field .text-option {
+    margin-left: 5px;
+}
+
+.div-timer {
+    color: #474747;
+    font-size: 18px;
+    text-align: center;
+}

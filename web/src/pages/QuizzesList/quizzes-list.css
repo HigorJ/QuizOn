@@ -1,0 +1,11 @@
+.lobby-content .current-quiz-items {
+    height: fit-content;
+    width: max-content;
+    padding: 10px;
+    max-width: 73vw;
+    
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+}
+

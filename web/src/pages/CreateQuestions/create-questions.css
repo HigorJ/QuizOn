@@ -1,0 +1,47 @@
+.create-questions-form {
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+    max-width: 600px;
+    align-items: center;
+    justify-self: center;
+    align-self: center;
+    height: 100%;
+}
+
+.create-questions-form .pre-configs-quiz {
+    width: 100%;
+    display: flex;
+}
+
+#input-field-number-questions {
+    width: 10%;
+    margin-left: 5px;
+}
+
+.create-questions-form .alternatives {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 100%;
+}
+
+.create-questions-form .alternatives-buttons {
+    margin-top: 10px;
+    width: 100%;
+    display: flex;
+    justify-content: space-evenly;
+}
+
+.input-check-box {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.check-answer {
+    width: 30px;
+    height: 30px;
+    margin-left: 5px;
+    cursor: pointer;
+}

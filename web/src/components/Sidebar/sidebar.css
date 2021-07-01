@@ -1,0 +1,34 @@
+#lobby aside {
+    width: 20vw;
+    height: 100%;
+    padding: 25px;
+    display: flex;
+    position: fixed;
+    color: #E1E1E1;
+    flex-direction: column;
+    align-items: center;
+    background-color: #2480D6;
+}
+
+aside h1 {
+    color: #E1E1E1;
+    font-size: 38px;
+    text-decoration: underline;
+    cursor: pointer;
+}
+
+#lobby aside .room-code {
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+}
+
+.room-code button {
+    width: 250px;
+    height: 50px;
+    color: #E1E1E1;
+    border-radius: 25px;
+    background-color: #004F99;
+}
