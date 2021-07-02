@@ -34,11 +34,11 @@ export default {
             throw new CommonError("Email or password incorrect!", 400);
         }
 
-        const userChecked = await passwordHash.checkHash(password, user);
+        await passwordHash.checkHash(password, user.password);
 
-        delete userChecked.password;
-
-        return userChecked;
+        delete user.password;
+        
+        return user;
     }, 
 
     async update({ name, email, password }, id) {

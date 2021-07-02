@@ -57,13 +57,13 @@ export default function Profile() {
     }
 
     return (
-        <div id="lobby">
+        <div id="container">
             <Sidebar />
 
             <section>
                 <Header  onProfile={true} />
 
-                <div className="lobby-content">
+                <div className="content">
 
                     <img className="user-image" src="https://image.shutterstock.com/image-photo/hand-hospital-medical-expert-shows-600w-559764574.jpg" alt="User" />
 

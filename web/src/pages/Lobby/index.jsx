@@ -12,27 +12,33 @@ export default function Lobby() {
 
     const [allQuizzes, setAllQuizzes] = useState([]);
     const [yourQuizzes, setYourQuizzes] = useState([]);
+    const [error, setError] = useState("");
 
     useEffect(() => {
         async function getQuizInfo() {
             const user = JSON.parse(localStorage.getItem("@application_user"));
 
-            const AllQ = await api.get('/quizzes');
-            const YourQ = await api.get(`/quizzes/${user.user_id}`);
+            try {
+                const AllQ = await api.get('/quizzes');
+                const YourQ = await api.get(`/quizzes/${user.user_id}`);
 
-            if(!AllQ.data || !YourQ.data) {
-                return;
+                if(!AllQ.data || !YourQ.data) {
+                    return;
+                }
+
+                setAllQuizzes(AllQ.data);
+                setYourQuizzes(YourQ.data);
+            } catch (error) {
+                setError(error);
             }
-
-            setAllQuizzes(AllQ.data);
-            setYourQuizzes(YourQ.data)
+            
         }
 
         getQuizInfo();
     }, []);
 
     return (
-        <div id="lobby">
+        <div id="container">
             <Sidebar />
 
             <section>
@@ -41,6 +47,8 @@ export default function Lobby() {
                 <QuizzesList title="All Quizzes" data={allQuizzes} />
 
                 <QuizzesList title="Your Quizzes" data={yourQuizzes} />
+
+                <p className="error-message">{error}</p>
             </section>
 
             <FloatButton />

@@ -60,4 +60,5 @@ button:hover {
 .error-message {
   color: #B22222;
   font-size: 18px;
+  text-align: center;
 }

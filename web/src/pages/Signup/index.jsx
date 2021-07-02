@@ -29,7 +29,7 @@ export default function Register() {
     }
 
     return (
-        <div id="container">
+        <div id="form-container">
             <div className="logo">
                 <h1>QuizOn</h1>
                 <p>Keep calm and give me your data</p>
@@ -40,17 +40,38 @@ export default function Register() {
                 <h1>Sign Up</h1>
 
                 <div className="input-field">
-                    <input name="username" id="username" type="text"  placeholder="Username" value={username} onChange={(e) => setUsername(e.target.value)} />
+                    <input 
+                        name="username" 
+                        id="username" 
+                        type="text"  
+                        placeholder="Username" 
+                        value={username} 
+                        onChange={(e) => setUsername(e.target.value)} 
+                    />
                     <label htmlFor="username">Username</label>
                 </div>
 
                 <div className="input-field">
-                    <input name="email" id="email" type="email" placeholder="Email" value={email} onChange={(e) => setEmail(e.target.value)} />
+                    <input 
+                        name="email" 
+                        id="email" 
+                        type="email" 
+                        placeholder="Email" 
+                        value={email} 
+                        onChange={(e) => setEmail(e.target.value)} 
+                    />
                     <label htmlFor="email">Email</label>
                 </div>
                 
                 <div className="input-field">
-                    <input name="password" id="password" type="password"  placeholder="Password" value={password} onChange={(e) => setPassword(e.target.value)} />
+                    <input 
+                        name="password" 
+                        id="password" 
+                        type="password" 
+                        placeholder="Password" 
+                        value={password} 
+                        onChange={(e) => setPassword(e.target.value)} 
+                    />
                     <label htmlFor="password">Password</label>
                 </div>
 

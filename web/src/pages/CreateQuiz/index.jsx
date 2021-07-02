@@ -41,22 +41,40 @@ export default function CreateRoom() {
     }
 
     return (
-        <div id="lobby">
+        <div id="container">
             <Sidebar />
 
             <section>
-                <Header  onProfile={false} />
+                <Header onProfile={false} />
             
-                <form className="create-quiz-form" onSubmit={(e) => handleCreateQuiz(e)}>
-                    <img className="create-quiz-image" src="https://image.shutterstock.com/image-photo/hand-hospital-medical-expert-shows-600w-559764574.jpg" alt="Room" />
+                <form className="create-quiz-form" onSubmit={handleCreateQuiz}>
+                    <img 
+                        className="create-quiz-image" 
+                        src="https://image.shutterstock.com/image-photo/hand-hospital-medical-expert-shows-600w-559764574.jpg" 
+                        alt="Room" 
+                    />
 
                     <div className="input-field">
-                        <input name="quiz-name" id="quiz-name" type="text" placeholder="Quiz name" value={name} onChange={(e) => setName(e.target.value)} />
+                        <input 
+                            name="quiz-name" 
+                            id="quiz-name" 
+                            type="text" 
+                            placeholder="Quiz name" 
+                            value={name} 
+                            onChange={(e) => setName(e.target.value)} 
+                        />
                         <label htmlFor="quiz-name">Quiz name</label>
                     </div>
 
                     <div className="input-field">
-                        <textarea name="quiz-description" id="quiz-description" type="text" placeholder="quiz description" value={description} onChange={(e) => setDescription(e.target.value)} />
+                        <textarea 
+                            name="quiz-description" 
+                            id="quiz-description" 
+                            type="text" 
+                            placeholder="quiz description" 
+                            value={description} 
+                            onChange={(e) => setDescription(e.target.value)} 
+                        />
                         <label htmlFor="quiz-description">Description</label>
                     </div>
 

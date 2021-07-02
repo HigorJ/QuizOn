@@ -25,6 +25,10 @@ class QuizRepository {
         return await knex(this.tableName).select(this.select).where(this.where).first();
     }
 
+    async update(data) {
+        return await knex(this.tableName).update(data).where(this.where);
+    }
+
     async delete() {
         return await knex(this.tableName).where(this.where).del();
     }

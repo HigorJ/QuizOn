@@ -22,7 +22,17 @@ export default {
             throw new InternalError('Error, try again later!');
         }
 
-        return { message: "Successfully" };
+        alternatives = alternatives.map((alternative, index) => {
+            return { ...alternative, alternative_id: result[index] }
+        });
+
+        const data = {
+            question_id: question_source_id,
+            question_text,
+            alternatives,
+        }
+
+        return data;
     }, 
 
     async show({ quiz_id: quiz_source_id }) {

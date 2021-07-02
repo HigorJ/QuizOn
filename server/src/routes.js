@@ -15,6 +15,7 @@ routes.delete('/deleteUser/:id', UserController.delete);
 routes.get('/quizzes/:id?', QuizController.index);
 routes.get('/quiz/:id', QuizController.show);
 routes.post('/createQuiz', QuizController.create);
+routes.put('/updateQuiz/:id', QuizController.update);
 routes.delete('/deleteQuiz/:id', QuizController.delete);
 
 routes.get('/quiz/:quiz_id/questions', QuestionsController.show);

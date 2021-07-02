@@ -7,7 +7,7 @@ export default function QuizzesList({ title, data }) {
     const history = useHistory();
     
     return (
-        <div className="lobby-content">
+        <div className="content">
             {data.length > 0 && (
                 <Link className="quizzes-list-title" to={`/quizzes/${title.replace(' ', '-').toLowerCase()}`}>
                     {title}

@@ -14,41 +14,71 @@ export default function CreateQuestions() {
     const { id } = useParams();
 
     const [currentQuestion, setCurrentQuestion] = useState(0);
-    const [question, setQuestion] = useState({ title: "", alternatives: [] });
+    const [question, setQuestion] = useState({ question_text: "", alternatives: [] });
     const [allQuestions, setAllQuestions] = useState([]);
     const [error, setError] = useState([]);
     const [totalCorrect, setTotalCorrect] = useState(0);
 
     function handlePreviousQuestion() {
         if(currentQuestion > 0) {
-            let [previousQuestion] = allQuestions.filter((v, index) => index === currentQuestion - 1);
+            let [previousQuestion] = allQuestions.filter((value, index) => index === currentQuestion - 1);
 
             setQuestion(previousQuestion);
 
+            setTotalCorrect(1);
             setCurrentQuestion(currentQuestion - 1);
         }
     }
 
-    function handleNextQuestion() {
+    async function handleNextQuestion() {
         if(totalCorrect !== 1) {
             return setError("Only one alternative can be correct!");
         }
 
-        let auxAllQuestions = allQuestions;
-
-        auxAllQuestions[currentQuestion] = question;
-
-        setAllQuestions(auxAllQuestions);
-
-        if(allQuestions[currentQuestion + 1] === undefined) {
-            setQuestion({ title: "", alternatives: [] });
+        if(question.question_id) {
+            await handleUpdateQuestion();
+        } else {
+            await handleCreateQuestion();
+        }
+    
+        if(!allQuestions[currentQuestion + 1]) {
+            setQuestion({ question_text: "", alternatives: [] });
+            setTotalCorrect(0);
         } else {
             setQuestion(allQuestions[currentQuestion + 1]);
+            setTotalCorrect(1)
         }
-        
+
         setError("");
-        setTotalCorrect(0);
         setCurrentQuestion(currentQuestion + 1);
+        
+    }
+
+    async function handleUpdateQuestion() {
+        var allQuestionsAux = allQuestions;
+
+        const response = await api.put(`/quiz/${id}/${question.question_id}`, question);
+
+        if(!response.data) {
+            return setError(response);
+        }
+
+        allQuestionsAux[currentQuestion] = { ...question };
+
+        setAllQuestions(allQuestionsAux);
+    }
+
+    async function handleCreateQuestion() {
+        const response = await api.post(`/quiz/${id}/createQuestions`, question);
+        
+        if(!response.data) {
+            return setError(response);
+        }
+
+        setAllQuestions([ 
+            ...allQuestions,
+            response.data
+        ]);
     }
 
     function handleAddAlternative() {
@@ -88,25 +118,13 @@ export default function CreateQuestions() {
     }
 
     async function handleSubmitQuiz() {
+        handleCreateQuestion();
 
-        var data = {
-            questions: allQuestions
-        }
-
-        if(question.alternatives.length > 0 && allQuestions[currentQuestion + 1] === undefined) {
-            data.questions.push(question);
-        }
-
-        console.log(data);
-
-
-        //await api.post(`/quiz/${id}/createQuestions`, data);
-
-        //history.push('/lobby');
+        history.push('/lobby');
     }
 
     return (
-        <div id="lobby">
+        <div id="container">
             <Sidebar />
 
             <section>
@@ -117,7 +135,14 @@ export default function CreateQuestions() {
 
                     <div className="pre-configs-quiz">
                         <div className="input-field">
-                            <input name="question-text" id="question-text" type="text" placeholder="question-text" onChange={(e) => setQuestion({ ...question, title: e.target.value })} value={question.title} />
+                            <input 
+                                name="question-text" 
+                                id="question-text" 
+                                type="text" 
+                                placeholder="question-text" 
+                                onChange={(e) => setQuestion({ ...question, question_text: e.target.value })} 
+                                value={question.question_text} 
+                            />
                             <label htmlFor="question-text">Question Text</label>
                         </div>
                     </div>
@@ -126,12 +151,23 @@ export default function CreateQuestions() {
                         <div key={index} className="alternatives">
                             <FiChevronRight size={32} color="#2480D6" />
                             <div className="input-field">
-                                <input name="alternative-text" type="text" placeholder="alternative-text" value={value.alternative_text} onChange={(e) => handleSaveAlternative(e, index)} />
+                                <input 
+                                    name="alternative-text" 
+                                    type="text" 
+                                    placeholder="alternative-text" 
+                                    value={value.alternative_text} 
+                                    onChange={(e) => handleSaveAlternative(e, index)} 
+                                />
                                 <label htmlFor="alternative-text">Alternative {index + 1}</label>
                             </div>
 
                             <div className="input-check-box">
-                                <input type="checkbox" className="check-answer" value={value.is_correct} onChange={(e) => handleSaveCorrect(e, index)} />
+                                <input 
+                                    type="checkbox" 
+                                    className="check-answer" 
+                                    checked={value.is_correct}
+                                    onChange={(e) => handleSaveCorrect(e, index)} 
+                                />
                             </div>
                         </div>
                     ))}
@@ -147,11 +183,19 @@ export default function CreateQuestions() {
                             <FiChevronLeft size={32} color="#FFFFFF" />
                         </button>
 
-                        <button className="button-circle" style={{ backgroundColor: "#CC5050" }} onClick={handleExitQuiz}>
+                        <button 
+                            className="button-circle" 
+                            style={{ backgroundColor: "#CC5050" }} 
+                            onClick={handleExitQuiz}
+                        >
                             <FiX size={32} color="#FFFFFF" />
                         </button>
 
-                        <button className="button-circle" style={{ backgroundColor: "#1CD20C" }} onClick={handleSubmitQuiz}>
+                        <button 
+                            className="button-circle" 
+                            style={{ backgroundColor: "#1CD20C" }} 
+                            onClick={handleSubmitQuiz}
+                        >
                             <FiCheck size={32} color="#FFFFFF" />
                         </button>
 

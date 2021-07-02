@@ -15,13 +15,13 @@ export default function QuizList() {
     const tempID = 1;
 
     return (
-        <div id="lobby">
+        <div id="container">
             <Sidebar />
 
             <section>
                 <Header onProfile={false} />
 
-                <div className="lobby-content">
+                <div className="content">
                     <Link className="quizzes-list-title" to={`/quizzes/${title}`}>
                         { title }
                     </Link>

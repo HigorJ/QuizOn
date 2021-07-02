@@ -31,6 +31,16 @@ export default {
         }
     }, 
 
+    async update(req, res, next) {
+        try {
+            const response = await QuizService.update(req.body, req.params, req.headers);
+
+            res.status(200).json(response);
+        } catch (error) {
+            next(error);
+        }
+    },
+
     async delete(req, res, next) {
         try {
             const response = await QuizService.delete(req.params, req.headers);

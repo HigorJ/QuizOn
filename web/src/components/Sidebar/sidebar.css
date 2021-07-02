@@ -1,4 +1,4 @@
-#lobby aside {
+#container aside {
     width: 20vw;
     height: 100%;
     padding: 25px;
@@ -17,7 +17,7 @@ aside h1 {
     cursor: pointer;
 }
 
-#lobby aside .room-code {
+#container aside .room-code {
     height: 100%;
     display: flex;
     flex-direction: column;

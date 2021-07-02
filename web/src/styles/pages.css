@@ -1,4 +1,4 @@
-#lobby {
+#container {
     width: 95vw;
     height: 95vh;
 
@@ -10,8 +10,7 @@ section {
     height: 100vh;
 }
 
-
-#lobby .float-button {
+#container .float-button {
     display: flex;
     flex-direction: column;
     justify-content: center;
@@ -26,7 +25,7 @@ section {
     right: 15px;
 }
 
-#lobby .float-button-child { 
+#container .float-button-child { 
     display: flex;
     flex-direction: column;
     justify-content: center;
@@ -42,6 +41,29 @@ section {
     transition: all .2s ease-out;
 }
 
-#lobby .float-button-child + button {
+#container .float-button-child + button {
     bottom: 140px;
+}
+
+section .content {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    margin: 10px 0px;
+    background-color: #E5E5E5;
+    border-radius: 10px;
+    padding: 10px;
+    min-width: 73vw;
+}
+
+.content .quizzes-list-title {
+    color: #585858;
+    font-size: 28px;
+    text-decoration: none;
+    transition: all .2s ease-in;
+}
+
+.content .quizzes-list-title:hover {
+    transform: scale(1.1);
 }

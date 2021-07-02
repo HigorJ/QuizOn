@@ -1,39 +1,38 @@
+#container .float-button {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
 
-#lobby .float-button {
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
+  width: 50px;
+  height: 50px;
+  background-color: #2480D6;
+  border-radius: 25px;
+  position: fixed;
+  bottom: 15px;
+  right: 15px;
+}
   
-    width: 50px;
-    height: 50px;
-    background-color: #2480D6;
-    border-radius: 25px;
-    position: fixed;
-    bottom: 15px;
-    right: 15px;
-  }
-  
-  #lobby .float-button:hover {
-    background-color: #1d64a7;
-  }
-  
-  #lobby .float-button-child { 
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
-  
-    border-radius: 25px;
-    width: 40px;
-    height: 40px;
-    position: fixed;
-    bottom: 80px;
-    right: 20px;
-  
-    transition: all .2s ease-out;
-  }
-  
-  #lobby .float-button-child + button {
-    bottom: 140px;
-  }
+#container .float-button:hover {
+  background-color: #1d64a7;
+}
+
+#container .float-button-child { 
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+
+  border-radius: 25px;
+  width: 40px;
+  height: 40px;
+  position: fixed;
+  bottom: 80px;
+  right: 20px;
+
+  transition: all .2s ease-out;
+}
+
+#container .float-button-child + button {
+  bottom: 140px;
+}

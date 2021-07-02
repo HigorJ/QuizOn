@@ -10,20 +10,24 @@ import './quiz.css';
 export default function Quiz() {
     const { id } = useParams();
     const [currentQuestion, setCurrentQuestion] = useState(0);
-    const [questions, setQuestions] = useState({});
-    const [alternatives, setAlternatives] = useState({});
+    const [questions, setQuestions] = useState([]);
+    const [alternatives, setAlternatives] = useState([]);
     const [score, setScore] = useState(0);
     const [error, setError] = useState("");
 
     useEffect(() => {
         async function getQuizInfo() {
-            const response = await api.get(`/quiz/${id}/questions`);
+            try {
+                const response = await api.get(`/quiz/${id}/questions`);
 
-            if(!response.data) {
-                return setError(response);
+                if(!response.data) {
+                    return setError(response);
+                }
+
+                setQuestions(response.data);
+            } catch (error) {
+                setError(error)
             }
-
-            setQuestions(response.data.questions);
         }
 
         getQuizInfo();
@@ -31,39 +35,47 @@ export default function Quiz() {
 
     useEffect(() => {
         async function getAlternatives() {
-            let question = questions[currentQuestion].question_id;
+            try {
+                if(questions[currentQuestion]) {
+                    let question = questions[currentQuestion].question_id;
 
-            const response = await api.get(`/quiz/${id}/questions/${question}`);
+                    const response = await api.get(`/quiz/${id}/questions/${question}`);
 
-            if(!response.data) {
-                return setError(response);
+                    if(!response.data) {
+                        return setError(response);
+                    }
+
+                    setAlternatives(response.data);
+                }
+                
+            } catch (error) {
+                setError(error);
             }
-
-            setAlternatives(response.data.alternatives);
         }
 
-        if(questions[currentQuestion]) {
+        if(questions[0] !== undefined) {
             getAlternatives();
         }
     }, [id, questions, currentQuestion]);
 
     function toNextQuestion() {
-        if(questions[currentQuestion + 1]) {
-            setCurrentQuestion(currentQuestion + 1);
+        setCurrentQuestion(currentQuestion + 1);
+
+        if(currentQuestion >= questions.length - 1) {
+            setError("You finished the quiz!");
         }
-        
     }
 
     function handleCheckAnswer(is_correct) {
-        if(is_correct) {
+        toNextQuestion();
+
+        if(is_correct && currentQuestion < questions.length) {
             setScore(score + 1);
         }
-
-        toNextQuestion();
     }
 
     return (
-        <div id="lobby">
+        <div id="container">
             <Score score={score} />
 
             <section>
@@ -77,13 +89,13 @@ export default function Quiz() {
                     </Link>                    
                 </header>
             
-                <div className="lobby-content">
-                    {alternatives[0] && (
+                <div className="content">
+                    { (questions.length > 0 && currentQuestion < questions.length) && (
                         <>
                             <h1 className="quiz-question-title">{questions[currentQuestion].question_text}</h1>
 
                             <img className="quiz-question-image" src="https://image.shutterstock.com/image-photo/hand-hospital-medical-expert-shows-600w-559764574.jpg" alt="Quiz do matrix" />
-
+        
                             {alternatives.map((item, index) => (
                                 <div key={item.alternative_id} className="option-field" onClick={() => handleCheckAnswer(item.is_correct)}>
                                     <p>{index + 1}. </p>

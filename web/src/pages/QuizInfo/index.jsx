@@ -32,13 +32,13 @@ export default function QuizInfo() {
     }, [id]);
 
     return (
-        <div id="lobby">
+        <div id="container">
             <Sidebar />
 
             <section>
                 <Header  onProfile={false} />
             
-                <div className="lobby-content">
+                <div className="content">
                     <img className="quiz-image" src="https://image.shutterstock.com/image-photo/hand-hospital-medical-expert-shows-600w-559764574.jpg" alt="Quiz do matrix" />
 
                     <h1 className="quiz-title">{quizInfo.name}</h1>

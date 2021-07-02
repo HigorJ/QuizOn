@@ -11,12 +11,15 @@ app.use(routes);
 app.use((error, req, res, next) => {
     if(error && error.status) {
         res.status(error.status).json({
-            message: error.message,
+            error: error.message,
             status: error.status
         });
     } else {
         console.log(error);
-        return res.status(500).json({ error: "Try again later!" });
+        return res.status(500).json({ 
+            error: "Try again later!", 
+            status: 500 
+        });
     }
 })
 
