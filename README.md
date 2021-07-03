@@ -1,5 +1,14 @@
 # QuizOn - Projeto de um Quiz Online (Em desenvolvimento)
 
+## Funcionalidades
+ - [x] Criar, atualizar e consultar usuário.
+ - [x] Criar, atualizar e consultar quizzes.
+ - [x] Responder perguntas e aumentar Score.
+ - [ ] Deletar quiz e usuário.
+ - [ ] SocketIO para criar salas e ter funcionalidades online.
+ - [ ] Mudar senha de um usuário.
+ - [ ] Recuperar senha.
+
 ## Tecnologias
 - Backend
     - NodeJS
