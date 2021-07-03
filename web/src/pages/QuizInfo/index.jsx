@@ -14,11 +14,13 @@ export default function QuizInfo() {
     const { id } = useParams();
     const ROOM_ID = 1;
 
+    const [user, setUser] = useState({});
     const [error, setError] = useState("");
     const [quizInfo, setQuizInfo] = useState("");
 
     useEffect(() => {
         async function getQuizInfo() {
+            setUser(JSON.parse(localStorage.getItem("@application_user")));
             const response = await api.get(`/quiz/${id}`);
 
             if(!response.data) {
@@ -50,6 +52,12 @@ export default function QuizInfo() {
                     <button onClick={() => history.push(`/quizzes/rooms/create-room`)}>Create room</button>
                     <button onClick={() => history.push(`/quizzes/all/${id}/${ROOM_ID}`)}>Random room</button>
                 </div>
+
+                { quizInfo.author === user.user_id && (
+                    <div className="edit-quiz">
+                        <button onClick={() => history.push(`/create-quiz/${quizInfo.quiz_id}/questions`)}>Edit Quiz</button>
+                    </div>
+                )}
 
                 <p className="error-message">{error}</p>
             </section>

@@ -54,7 +54,7 @@ export default {
             throw new CommonError("Incorrect ID!", 400);
         }
 
-        await passwordHash.checkHash(password, user);
+        await passwordHash.checkHash(password, user.password);
 
         let newData = {
             ...user,

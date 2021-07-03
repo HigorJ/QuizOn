@@ -10,14 +10,13 @@ export default {
             throw new CommonError("All fields are required!", 400);
         }
 
-        await QuizService.show({ id: quiz_source_id })
-
         const questionRepo = new QuesitonRepository({});
-        const altRepo = new AlternativeRepository({});
 
+        const altRepo = new AlternativeRepository({});
+        
         const [question_source_id] = await questionRepo.create({ question_text, quiz_source_id });
         const result = await altRepo.create(alternatives, question_source_id);
-
+        
         if(!result) {
             throw new InternalError('Error, try again later!');
         }

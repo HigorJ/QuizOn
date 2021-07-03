@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { useHistory, useParams } from 'react-router-dom';
 import { FiChevronRight, FiChevronLeft, FiX, FiCheck, FiPlus } from 'react-icons/fi';
 
@@ -18,6 +18,44 @@ export default function CreateQuestions() {
     const [allQuestions, setAllQuestions] = useState([]);
     const [error, setError] = useState([]);
     const [totalCorrect, setTotalCorrect] = useState(0);
+
+    useEffect(() => {
+        let isCalled = false; 
+
+        async function getData() {
+            try {
+                let result = await api.get(`/quiz/${id}/questions`);
+
+                let tmpQuestions = result.data;
+    
+                if(tmpQuestions.length > 0) {
+                    tmpQuestions = await  Promise.all(tmpQuestions.map(async (tmpQuestion) => {
+                        let altResult = await api.get(`/quiz/${id}/questions/${tmpQuestion.question_id}`);
+                        let tmpAlt = altResult.data;
+        
+                        tmpQuestion = { ...tmpQuestion, alternatives: tmpAlt };
+        
+                        return tmpQuestion;
+                    }));
+        
+                    setCurrentQuestion(tmpQuestions.length);
+                    setQuestion(tmpQuestions[tmpQuestions.length - 1]);
+                    setTotalCorrect(1);
+                    setAllQuestions(tmpQuestions);
+                }
+            } catch (error) {
+                setError(error);
+            }
+        }
+
+        if(!isCalled) {
+            getData();
+        }
+        
+        return () => {
+            isCalled = true;
+        }
+    }, [id]);
 
     function handlePreviousQuestion() {
         if(currentQuestion > 0) {

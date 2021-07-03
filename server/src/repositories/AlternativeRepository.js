@@ -11,9 +11,7 @@ class AlternativeRepository {
 
     async create(alternatives, question_source_id) {
         return await Promise.all(alternatives.map(async (alternative) => {
-            let id = await knex('alternatives').insert({ ...alternative, question_source_id });
-            
-            return id[0];
+            return (await knex('alternatives').insert({ ...alternative, question_source_id }))[0];
         }));
     }
 

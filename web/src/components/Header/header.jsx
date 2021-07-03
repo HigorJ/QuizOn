@@ -1,10 +1,11 @@
 import React, { useState, useEffect } from 'react';
-import { FiChevronRight, FiChevronLeft } from 'react-icons/fi';
+import { FiChevronLeft, FiLogOut } from 'react-icons/fi';
 import { Link, useHistory } from 'react-router-dom';
 
 import './header.css';
 
 export default function Header({ onProfile }) {
+    const history = useHistory();
 
     const [user, setUser] = useState({});
 
@@ -16,24 +17,35 @@ export default function Header({ onProfile }) {
         getUserInfo();
     }, [onProfile]);
 
-    const history = useHistory();
+    function handleLogout() {
+        localStorage.removeItem("@application_user");
+
+        history.push('/');
+    }
 
     return (
         <>
             { !onProfile ? (
-                <header style={{ justifyContent: 'flex-end' }}>
+                <header>
                     <Link className="header-link-button" to="/profile">
+                        <FiChevronLeft size={32} color="#474747" />
                         <p>{user.name}</p>
                         <img src="https://image.shutterstock.com/image-vector/hand-drawn-modern-man-avatar-600w-1373616899.jpg" alt="User" />
-                    
-                        <FiChevronRight size={32} color="#474747" />
                     </Link>
+
+                    <div className="header-link-button-logout" onClick={handleLogout} to="/profile">
+                        <FiLogOut size={32} color="#CC5050" />
+                    </div>
                 </header>
             ) : (
-                <header style={{ justifyContent: 'flex-start' }}>
+                <header>
                     <div className="header-link-button" onClick={() => history.goBack()}>
-                        <FiChevronLeft size={28} color="#474747" />
+                        <FiChevronLeft size={32} color="#474747" />
                         <p>Lobby</p>
+                    </div>
+                    
+                    <div className="header-link-button-logout" onClick={handleLogout}>
+                        <FiLogOut size={32} color="#CC5050" />
                     </div>
                 </header>
             )}

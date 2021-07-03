@@ -31,7 +31,6 @@ export default function Lobby() {
             } catch (error) {
                 setError(error);
             }
-            
         }
 
         getQuizInfo();

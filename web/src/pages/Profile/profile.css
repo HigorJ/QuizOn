@@ -1,7 +1,7 @@
 .user-image {
-    width: 250px;
-    height: 250px;
-    border-radius: 125px;
+    width: 200px;
+    height: 200px;
+    border-radius: 50%;
 }
 
 .profile-input-field {
