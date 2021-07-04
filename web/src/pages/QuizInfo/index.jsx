@@ -33,6 +33,28 @@ export default function QuizInfo() {
         getQuizInfo();
     }, [id]);
 
+    function handleUpdateQuiz() {
+        history.push(`/create-quiz/${quizInfo.quiz_id}/questions`);
+    }
+
+    async function handleDeleteQuiz() {
+        try {
+            let response = await api.delete(`/deleteQuiz/${id}`, {
+                headers: { 
+                    user_id: user.user_id
+                }
+            });
+
+            if(!response.data) {
+                return setError(response);
+            }
+
+            history.push('/lobby');
+        } catch (error) {
+            setError(error);
+        }
+    }
+
     return (
         <div id="container">
             <Sidebar />
@@ -55,7 +77,8 @@ export default function QuizInfo() {
 
                 { quizInfo.author === user.user_id && (
                     <div className="edit-quiz">
-                        <button onClick={() => history.push(`/create-quiz/${quizInfo.quiz_id}/questions`)}>Edit Quiz</button>
+                        <button className="btn-edit-quiz" onClick={handleUpdateQuiz}>Edit Quiz</button>
+                        <button className="btn-delete-quiz" onClick={handleDeleteQuiz}>Delete Quiz</button>
                     </div>
                 )}
 

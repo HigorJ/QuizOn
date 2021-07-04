@@ -11,12 +11,13 @@ import './profile.css';
 export default function Profile() {
     const history = useHistory();
 
-    const [edit, setEdit] = useState(false);
     const [user, setUser] = useState({});
     const [name, setName] = useState("");
     const [email, setEmail] = useState("");
     const [password, setPassword] = useState("");
     const [error, setError] = useState("");
+    const [deleteAccount, setDeleteAccount] = useState(false);
+    const [updateData, setUpdateData] = useState(false);
 
     useEffect(() => {
         function getUserInfo() {
@@ -26,20 +27,17 @@ export default function Profile() {
         getUserInfo();
     }, []);
 
-    function handleCheckButton() {
-        if(!edit) {
-            return setEdit(!edit);
-        }
-
-        if(!name || !password || !email) {
-            return setError("All fields are required!");
-        }
-
-        handleUpdateInfo();
-    }
-
     async function handleUpdateInfo() {
         try {
+            if(!updateData) {
+                setDeleteAccount(false);
+                return setUpdateData(true);
+            }
+
+            if(!name || !password || !email) {
+                return setError("All fields are required!");
+            }
+
             const data = {
                 name,
                 email,
@@ -60,6 +58,31 @@ export default function Profile() {
         }
     }
 
+    async function handleDeleteAccount() {
+        try {
+            if(!deleteAccount) {
+                setUpdateData(false);
+                return setDeleteAccount(true);
+            }
+
+            const response = await api.delete(`/deleteUser/${user.user_id}`, {
+                data: {
+                    password: password
+                }
+            });
+
+            if(!response.data) {
+                return setError(response);
+            }
+
+            localStorage.removeItem("@application_user");
+
+            history.push('/');
+        } catch (error) {
+            setError(error);
+        }
+    }
+
     return (
         <div id="container">
             <Sidebar />
@@ -71,37 +94,42 @@ export default function Profile() {
 
                     <img className="user-image" src="https://image.shutterstock.com/image-photo/hand-hospital-medical-expert-shows-600w-559764574.jpg" alt="User" />
 
-                    <input 
-                        disabled={!edit} 
-                        className="profile-input-field" 
-                        placeholder={`${user.name}`} 
-                        value={name} 
-                        onChange={(e) => setName(e.target.value)} 
-                    />
+                    { !deleteAccount && (
+                        <>
+                            <input 
+                                disabled={!updateData} 
+                                className="profile-input-field" 
+                                placeholder={`${user.name}`} 
+                                value={name} 
+                                onChange={(e) => setName(e.target.value)} 
+                            />
 
-                    <input 
-                        type="email" 
-                        disabled={!edit} 
-                        className="profile-input-field" 
-                        placeholder={`${user.email}`} 
-                        value={email} 
-                        onChange={(e) => setEmail(e.target.value)} 
-                    />
+                            <input 
+                                type="email" 
+                                disabled={!updateData} 
+                                className="profile-input-field" 
+                                placeholder={`${user.email}`} 
+                                value={email} 
+                                onChange={(e) => setEmail(e.target.value)} 
+                            />
+                        </>
+                    )}
 
-                    <input 
-                        type="password" 
-                        disabled={!edit} 
-                        className="profile-input-field" 
-                        placeholder="password verify" 
-                        value={password} 
-                        onChange={(e) => setPassword(e.target.value)}  
-                    />
+                    { (deleteAccount || updateData) && (
+                        <input 
+                            type="password" 
+                            className="profile-input-field" 
+                            placeholder="password verify" 
+                            value={password} 
+                            onChange={(e) => setPassword(e.target.value)}  
+                        />
+                    )}
 
                     <p className="error-message">{error}</p>
 
                     <div className="profile-buttons">
-                        <button onClick={handleCheckButton}>{ edit ? "Update" : "Edit" }</button>
-                        <button className="delete-button">Delete account :(</button>
+                        <button onClick={handleUpdateInfo}>{ updateData ? "Update" : "Edit" }</button>
+                        <button className="delete-button" onClick={handleDeleteAccount}>Delete account :(</button>
                     </div>
                 </div>
 

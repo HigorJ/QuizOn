@@ -1,10 +1,9 @@
 # QuizOn - Projeto de um Quiz Online (Em desenvolvimento)
 
 ## Funcionalidades
- - [x] Criar, atualizar e consultar usuário.
- - [x] Criar, atualizar e consultar quizzes.
+ - [x] Criar, atualizar, consultar e deletar usuário.
+ - [x] Criar, atualizar, consultar e deletar quizzes.
  - [x] Responder perguntas e aumentar Score.
- - [ ] Deletar quiz e usuário.
  - [ ] SocketIO para criar salas e ter funcionalidades online.
  - [ ] Mudar senha de um usuário.
  - [ ] Recuperar senha.
@@ -105,7 +104,7 @@
   <img src="doc-images/profile-screen.png" alt="profile-screen" width="400" />
 </p>
 
-- Ao clicar em "Edit" os campos de texto ficarão disponíveis para poder editar suas informações e, caso a senha digitada for correta, elas serão atualizadas. (Ainda não tem como mudar a senha de um usuário e deletar uma conta).
+- Ao clicar em "Edit" os campos de texto ficarão disponíveis para poder editar suas informações e, caso a senha digitada for correta, elas serão atualizadas. (Ainda não tem como mudar a senha de um usuário).
 
 - Ao clicar em Lobby no header, ele voltará ao lobby.
 

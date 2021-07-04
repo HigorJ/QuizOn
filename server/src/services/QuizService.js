@@ -67,6 +67,10 @@ export default {
         const quizRepo = new QuizRepository({ where: { quiz_id: id }});
         const quiz = await quizRepo.findOne();
         
+        if(!quiz) {
+            throw new CommonError("Invalid Quiz ID!", 400);
+        }
+
         if(quiz.author !== Number(user_id)) {
             throw new CommonError("Only the author can delete this quiz!", 401);
         }

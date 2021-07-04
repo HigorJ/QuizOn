@@ -20,8 +20,6 @@ export default function CreateQuestions() {
     const [totalCorrect, setTotalCorrect] = useState(0);
 
     useEffect(() => {
-        let isCalled = false; 
-
         async function getData() {
             try {
                 let result = await api.get(`/quiz/${id}/questions`);
@@ -48,13 +46,7 @@ export default function CreateQuestions() {
             }
         }
 
-        if(!isCalled) {
-            getData();
-        }
-        
-        return () => {
-            isCalled = true;
-        }
+        getData();
     }, [id]);
 
     function handlePreviousQuestion() {
