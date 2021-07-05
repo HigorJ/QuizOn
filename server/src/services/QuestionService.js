@@ -11,7 +11,6 @@ export default {
         }
 
         const questionRepo = new QuesitonRepository({});
-
         const altRepo = new AlternativeRepository({});
         
         const [question_source_id] = await questionRepo.create({ question_text, quiz_source_id });
@@ -56,7 +55,12 @@ export default {
         const questionRepo = new QuesitonRepository({ where: { 'question_id': question_id }});
         const altRepo = new AlternativeRepository({});
 
-        await questionRepo.update({ question_text, quiz_source_id: quiz_id })
+        const questionNewData = {
+            question_text, 
+            quiz_source_id: quiz_id
+        }
+
+        await questionRepo.update(questionNewData)
         await altRepo.update(alternatives, question_id);
 
         return { message: "Successfully" };

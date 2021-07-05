@@ -1,6 +1,7 @@
 import express from 'express';
 import routes from './routes.js';
 import cors from 'cors';
+import path from 'path';
 
 const app = express();
 
@@ -21,7 +22,7 @@ app.use((error, req, res, next) => {
             status: 500 
         });
     }
-})
+});
 
 
 app.listen(3333);

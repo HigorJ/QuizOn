@@ -3,7 +3,7 @@ import UserService from '../services/UserService.js';
 export default {
     async create(req, res, next) {
         try {
-            const response = await UserService.create(req.body);
+            const response = await UserService.create(req.body, req.file);
 
             return res.status(200).json(response);
         } catch (error) {
@@ -23,7 +23,8 @@ export default {
 
     async update(req, res, next) {
         try {
-            const response = await UserService.update(req.body, req.params.id);
+            console.log(req);
+            const response = await UserService.update(req.body, req.params.id, req.file);
 
             return res.status(200).json(response);
         } catch (error) {

@@ -1,21 +1,25 @@
 import { Router } from 'express';
+import multer from 'multer';
+import multerConfig from './config/multerConfig.js';
 
 import UserController from './controllers/UserController.js';
 import QuizController from './controllers/QuizController.js';
 import QuestionsController from './controllers/QuestionController.js';
 import AlternativesController from './controllers/AlternativeController.js';
 
+var upload = multer({ storage: multerConfig });
+
 const routes = Router();
 
 routes.post('/getUser', UserController.show);
-routes.post('/createUser', UserController.create);
-routes.put('/updateUser/:id', UserController.update);
+routes.post('/createUser', upload.single('user_photo'), UserController.create);
+routes.put('/updateUser/:id', upload.single('user_photo'), UserController.update);
 routes.delete('/deleteUser/:id', UserController.delete);
 
 routes.get('/quizzes/:id?', QuizController.index);
 routes.get('/quiz/:id', QuizController.show);
-routes.post('/createQuiz', QuizController.create);
-routes.put('/updateQuiz/:id', QuizController.update);
+routes.post('/createQuiz', upload.single('quiz_photo'), QuizController.create);
+routes.put('/updateQuiz/:id', upload.single('quiz_photo'), QuizController.update);
 routes.delete('/deleteQuiz/:id', QuizController.delete);
 
 routes.get('/quiz/:quiz_id/questions', QuestionsController.show);

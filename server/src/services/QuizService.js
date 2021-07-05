@@ -1,5 +1,6 @@
 import QuizRepository from '../repositories/QuizRepository.js';
 import CommonError from '../errors/CommonError.js';
+import deleteImage from '../utils/DeleteImage.js';
 
 export default {
     async index({ id }) {
@@ -10,18 +11,20 @@ export default {
         return allQuizzes;
     },
 
-    async create({ name, description, user_id }) {
+    async create({ name, description, user_id }, file = { filename: '' }) {
         if(!name || !description) {
+            deleteImage(file.filename);
             throw new CommonError("All fields are required", 400);
         }
 
         if(!user_id) {
+            deleteImage(file.filename);
             throw new CommonError("User ID not found, try to log out and log in again!", 400);
         }
 
         const quizRepo = new QuizRepository({});
 
-        const result = quizRepo.create({ name, description, author: user_id });
+        const result = quizRepo.create({ name, description, author: user_id, quiz_photo: file.filename });
 
         return result;
     },
@@ -42,7 +45,7 @@ export default {
         return quiz;
     }, 
 
-    async update({ name, description }, { id }, { user_id }) {
+    async update({ name, description }, { id }, { user_id }, file) {
         if(!id || !user_id) {
             throw new CommonError("ID is required!", 400);
         }
@@ -54,7 +57,18 @@ export default {
             throw new CommonError("Only the author can update this quiz", 401);
         }
 
-        const result = await quizRepo.update({ name, description, author: user_id });
+        const newData = {
+            ...quiz,
+            name: !name ? quiz.name : name,
+            description: !description ? quiz.description : description,
+            quiz_photo: !file ? quiz.quiz_photo : file.filename
+        }
+
+        if(file) {
+            deleteImage(quiz.quiz_photo);
+        }
+        
+        const result = await quizRepo.update(newData);
 
         return result;
     },
@@ -74,6 +88,8 @@ export default {
         if(quiz.author !== Number(user_id)) {
             throw new CommonError("Only the author can delete this quiz!", 401);
         }
+
+        deleteImage(quiz.quiz_photo);
 
         const result = await quizRepo.delete();
 

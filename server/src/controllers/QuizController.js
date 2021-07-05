@@ -13,7 +13,7 @@ export default {
 
     async create(req, res, next) {
         try {
-            const response = await QuizService.create(req.body);
+            const response = await QuizService.create(req.body, req.file);
 
             res.status(200).json(response);
         } catch (error) {
@@ -33,7 +33,7 @@ export default {
 
     async update(req, res, next) {
         try {
-            const response = await QuizService.update(req.body, req.params, req.headers);
+            const response = await QuizService.update(req.body, req.params, req.headers, req.file);
 
             res.status(200).json(response);
         } catch (error) {

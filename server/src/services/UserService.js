@@ -1,10 +1,12 @@
 import passwordHash from '../utils/PasswordEncrypt.js';
 import UserRepository from '../repositories/UserRepository.js';
 import CommonError from '../errors/CommonError.js';
+import deleteImage from '../utils/DeleteImage.js';
 
 export default {
-    async create({ name, email, password }) {
+    async create({ name, email, password }, file = { filename: '' }) {
         if(!name || !email || !password) {
+            deleteImage(file.filename);
             throw new CommonError("All fields are required!", 400);
         }
 
@@ -12,12 +14,13 @@ export default {
         const user = await userRepo.findOne();
 
         if(user) {
+            deleteImage(file.filename);
             throw new CommonError("Email already exists!", 400);
         }
         
         const hash = await passwordHash.createHash(password);
 
-        await userRepo.create({ name, email, password: hash });
+        await userRepo.create({ name, email, password: hash, user_photo: file.filename });
 
         return { message: "Successfully" };
     },
@@ -41,7 +44,7 @@ export default {
         return user;
     }, 
 
-    async update({ name, email, password }, id) {
+    async update({ name, email, password }, id, file) {
         if(!id || !password) {
             throw new CommonError("ID and password are required!", 400);
         }
@@ -60,8 +63,13 @@ export default {
             ...user,
             name: !name ? user.name : name,
             email: !email ? user.email : email,
+            user_photo: !file ? user.user_photo : file.filename
         }
 
+        if(file) {
+            deleteImage(user.user_photo);
+        }
+        
         delete newData.password;
 
         let updateResult = await userRepo.update(newData);
@@ -82,6 +90,8 @@ export default {
         }
             
         await passwordHash.checkHash(password, user.password);
+
+        deleteImage(user.user_photo);
 
         await userRepo.delete();
 
