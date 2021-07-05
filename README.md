@@ -4,6 +4,7 @@
  - [x] Criar, atualizar, consultar e deletar usuário.
  - [x] Criar, atualizar, consultar e deletar quizzes.
  - [x] Responder perguntas e aumentar Score.
+ - [X] Upload de imagens no Backend.
  - [ ] SocketIO para criar salas e ter funcionalidades online.
  - [ ] Mudar senha de um usuário.
  - [ ] Recuperar senha.
