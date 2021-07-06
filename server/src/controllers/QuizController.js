@@ -13,7 +13,7 @@ export default {
 
     async create(req, res, next) {
         try {
-            const response = await QuizService.create(req.body, req.file);
+            const response = await QuizService.create(req.body, req.headers, req.file);
 
             res.status(200).json(response);
         } catch (error) {

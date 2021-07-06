@@ -1,5 +1,6 @@
 import React from 'react';
 import { Link, useHistory } from 'react-router-dom';
+import { FiCameraOff } from 'react-icons/fi';
 
 import './quizzes-list.css';
 
@@ -17,7 +18,11 @@ export default function QuizzesList({ title, data }) {
             <div className="quizzes-items">
                 {data.map((item) => (
                     <div key={item.quiz_id} className="quiz-item" onClick={() => history.push(`/quizzes/all/${item.quiz_id}`)}>
-                        <img src="https://image.shutterstock.com/image-photo/hand-hospital-medical-expert-shows-600w-559764574.jpg" alt={item.name} />
+                        {item.quiz_photo === "" ? (
+                            <FiCameraOff size={48} color="#474747" />
+                        ) : (
+                            <img src={item.quiz_photo} alt={item.name} />
+                        )}
                         <p>{item.name}</p>
                     </div>
                 ))}

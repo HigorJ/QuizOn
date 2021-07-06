@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { useHistory, useParams } from 'react-router-dom';
 import api from '../../services/api.js';
+import { FiCameraOff } from 'react-icons/fi';
 
 import Sidebar from '../../components/Sidebar/sidebar';
 import Header from '../../components/Header/header';
@@ -34,7 +35,7 @@ export default function QuizInfo() {
     }, [id]);
 
     function handleUpdateQuiz() {
-        history.push(`/create-quiz/${quizInfo.quiz_id}/questions`);
+        history.push(`/create-quiz/${quizInfo.quiz_id}`);
     }
 
     async function handleDeleteQuiz() {
@@ -59,33 +60,39 @@ export default function QuizInfo() {
         <div id="container">
             <Sidebar />
 
-            <section>
-                <Header  onProfile={false} />
-            
-                <div className="content">
-                    <img className="quiz-image" src="https://image.shutterstock.com/image-photo/hand-hospital-medical-expert-shows-600w-559764574.jpg" alt="Quiz do matrix" />
+            <div className="page">
+                <Header onProfile={false} />
 
-                    <h1 className="quiz-title">{quizInfo.name}</h1>
+                <section>
+                    <div className="content">
+                        {quizInfo.quiz_photo === "" ? (
+                            <FiCameraOff size={48} color="#474747" />
+                        ) : (
+                            <img className="quiz-image" src={quizInfo.quiz_photo} alt="Quiz do matrix" />
+                        )}
 
-                    <p className="quiz-description">{quizInfo.description}</p>
-                </div>
+                        <h1 className="quiz-title">{quizInfo.name}</h1>
 
-                <div className='quiz-buttons'>
-                    <button onClick={() => history.push(`/quizzes/rooms/create-room`)}>Create room</button>
-                    <button onClick={() => history.push(`/quizzes/all/${id}/${ROOM_ID}`)}>Random room</button>
-                </div>
-
-                { quizInfo.author === user.user_id && (
-                    <div className="edit-quiz">
-                        <button className="btn-edit-quiz" onClick={handleUpdateQuiz}>Edit Quiz</button>
-                        <button className="btn-delete-quiz" onClick={handleDeleteQuiz}>Delete Quiz</button>
+                        <p className="quiz-description">{quizInfo.description}</p>
                     </div>
-                )}
 
-                <p className="error-message">{error}</p>
-            </section>
+                    <div className='quiz-buttons'>
+                        <button onClick={() => history.push(`/quizzes/rooms/create-room`)}>Create room</button>
+                        <button onClick={() => history.push(`/quizzes/all/${id}/${ROOM_ID}`)}>Random room</button>
+                    </div>
 
-            <FloatButton />
+                    { quizInfo.author === user.user_id && (
+                        <div className="edit-quiz">
+                            <button className="btn-edit-quiz" onClick={handleUpdateQuiz}>Edit Quiz</button>
+                            <button className="btn-delete-quiz" onClick={handleDeleteQuiz}>Delete Quiz</button>
+                        </div>
+                    )}
+
+                    <p className="error-message">{error}</p>
+                </section>
+
+                <FloatButton />
+            </div>
         </div>
     )
 }

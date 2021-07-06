@@ -1,7 +1,8 @@
 import React, { useState, useEffect } from 'react';
 import { useHistory } from 'react-router-dom';
-import api from '../../services/api.js';
+import PhotoInput from '../../components/PhotoInput/index.jsx';
 
+import api from '../../services/api.js';
 import Sidebar from '../../components/Sidebar/sidebar';
 import Header from '../../components/Header/header';
 import FloatButton from '../../components/FloatButton/floatButton';
@@ -11,6 +12,7 @@ import './profile.css';
 export default function Profile() {
     const history = useHistory();
 
+    const [photo, setPhoto] = useState("");
     const [user, setUser] = useState({});
     const [name, setName] = useState("");
     const [email, setEmail] = useState("");
@@ -38,11 +40,12 @@ export default function Profile() {
                 return setError("All fields are required!");
             }
 
-            const data = {
-                name,
-                email,
-                password
-            }
+            const data = new FormData();
+
+            data.append('name', name);
+            data.append('email', email);
+            data.append('password', password);
+            data.append('user_photo', photo);
     
             const response = await api.put(`/updateUser/${user.user_id}`, data);
     
@@ -87,54 +90,55 @@ export default function Profile() {
         <div id="container">
             <Sidebar />
 
-            <section>
-                <Header  onProfile={true} />
+            <div className="page">
+                <Header onProfile={true} />
+                
+                <section>
+                    <div className="content">
+                        <PhotoInput setPhoto={setPhoto} imageUrl={user.user_photo} />
 
-                <div className="content">
+                        {!deleteAccount && (
+                            <>
+                                <input 
+                                    disabled={!updateData} 
+                                    className="profile-input-field" 
+                                    placeholder={`${user.name}`} 
+                                    value={name} 
+                                    onChange={(e) => setName(e.target.value)} 
+                                />
 
-                    <img className="user-image" src="https://image.shutterstock.com/image-photo/hand-hospital-medical-expert-shows-600w-559764574.jpg" alt="User" />
+                                <input 
+                                    type="email" 
+                                    disabled={!updateData} 
+                                    className="profile-input-field" 
+                                    placeholder={`${user.email}`} 
+                                    value={email} 
+                                    onChange={(e) => setEmail(e.target.value)} 
+                                />
+                            </>
+                        )}
 
-                    { !deleteAccount && (
-                        <>
+                        { (deleteAccount || updateData) && (
                             <input 
-                                disabled={!updateData} 
+                                type="password" 
                                 className="profile-input-field" 
-                                placeholder={`${user.name}`} 
-                                value={name} 
-                                onChange={(e) => setName(e.target.value)} 
+                                placeholder="password verify" 
+                                value={password} 
+                                onChange={(e) => setPassword(e.target.value)}  
                             />
+                        )}
 
-                            <input 
-                                type="email" 
-                                disabled={!updateData} 
-                                className="profile-input-field" 
-                                placeholder={`${user.email}`} 
-                                value={email} 
-                                onChange={(e) => setEmail(e.target.value)} 
-                            />
-                        </>
-                    )}
+                        <p className="error-message">{error}</p>
 
-                    { (deleteAccount || updateData) && (
-                        <input 
-                            type="password" 
-                            className="profile-input-field" 
-                            placeholder="password verify" 
-                            value={password} 
-                            onChange={(e) => setPassword(e.target.value)}  
-                        />
-                    )}
-
-                    <p className="error-message">{error}</p>
-
-                    <div className="profile-buttons">
-                        <button onClick={handleUpdateInfo}>{ updateData ? "Update" : "Edit" }</button>
-                        <button className="delete-button" onClick={handleDeleteAccount}>Delete account :(</button>
+                        <div className="profile-buttons">
+                            <button onClick={handleUpdateInfo}>{ updateData ? "Update" : "Edit" }</button>
+                            <button className="delete-button" onClick={handleDeleteAccount}>Delete account :(</button>
+                        </div>
                     </div>
-                </div>
 
-                <FloatButton />
-            </section>
+                    <FloatButton />
+                </section>
+            </div>
         </div>
     )   
 }

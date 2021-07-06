@@ -24,5 +24,7 @@ app.use((error, req, res, next) => {
     }
 });
 
+app.use('/uploads', express.static(path.resolve(path.resolve(), 'uploads')));
+
 
 app.listen(3333);

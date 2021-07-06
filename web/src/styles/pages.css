@@ -1,16 +1,31 @@
 #container {
-    width: 95vw;
-    height: 95vh;
+    display: grid;
+    grid-template-columns: 1fr 5fr;
+    grid-template-rows: 1fr;
+    grid-template-areas: "sidebar content";
+}
+
+aside {
+    grid-area: "sidebar";
+}
+
+.page {
+    width: 100%;
+    padding: 10px;
 
     display: flex;
     flex-direction: column;
+    grid-area: "content";
 }
 
-section {
-    height: 100vh;
+.page section {
+    display: flex;
+    width: 100%;
+    flex-direction: column;
+    align-self: center;
 }
 
-#container .float-button {
+.float-button {
     display: flex;
     flex-direction: column;
     justify-content: center;
@@ -25,7 +40,7 @@ section {
     right: 15px;
 }
 
-#container .float-button-child { 
+.float-button-child { 
     display: flex;
     flex-direction: column;
     justify-content: center;
@@ -41,7 +56,7 @@ section {
     transition: all .2s ease-out;
 }
 
-#container .float-button-child + button {
+.page .float-button-child + button {
     bottom: 140px;
 }
 
@@ -54,7 +69,7 @@ section .content {
     background-color: #E5E5E5;
     border-radius: 10px;
     padding: 10px;
-    min-width: 73vw;
+    width: 100%;
 }
 
 .content .quizzes-list-title {

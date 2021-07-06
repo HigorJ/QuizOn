@@ -1,7 +1,11 @@
 .user-image {
-    width: 200px;
-    height: 200px;
+    width: 150px;
+    height: 150px;
     border-radius: 50%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    border: 1px solid #2480D6;
 }
 
 .profile-input-field {

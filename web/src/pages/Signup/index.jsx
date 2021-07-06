@@ -1,10 +1,13 @@
 import React, { useState } from 'react';
 import { Link, useHistory } from 'react-router-dom';
+
 import api from '../../services/api.js';
+import PhotoInput from '../../components/PhotoInput/index.jsx';
 
 export default function Register() {
     const history = useHistory();
 
+    const [photo, setPhoto] = useState("");
     const [username, setUsername] = useState("");
     const [email, setEmail] = useState("");
     const [password, setPassword] = useState("");
@@ -13,11 +16,12 @@ export default function Register() {
     async function handleRegister(e) {
         e.preventDefault();
 
-        const data = {
-            name: username,
-            email,
-            password
-        }
+        const data = new FormData();
+
+        data.append('name', username);
+        data.append('email', email);
+        data.append('password', password);
+        data.append('user_photo', photo);
 
         const response = await api.post('/createUser', data);
     
@@ -38,6 +42,8 @@ export default function Register() {
 
             <form onSubmit={(e) => handleRegister(e)}>
                 <h1>Sign Up</h1>
+
+                <PhotoInput setPhoto={setPhoto} />
 
                 <div className="input-field">
                     <input 

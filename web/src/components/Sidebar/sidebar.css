@@ -1,9 +1,7 @@
-#container aside {
-    width: 20vw;
-    height: 100%;
+aside {
+    height: 100vh;
     padding: 25px;
     display: flex;
-    position: fixed;
     color: #E1E1E1;
     flex-direction: column;
     align-items: center;
@@ -17,7 +15,7 @@ aside h1 {
     cursor: pointer;
 }
 
-#container aside .room-code {
+aside .room-code {
     height: 100%;
     display: flex;
     flex-direction: column;

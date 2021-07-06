@@ -1,18 +1,22 @@
 import React, { useEffect, useState } from 'react';
+import { useHistory, useParams } from 'react-router-dom';
 import { FiChevronRight } from 'react-icons/fi';
-import api from '../../services/api.js';
 
+import api from '../../services/api.js';
 import Sidebar from '../../components/Sidebar/sidebar';
 import Header from '../../components/Header/header';
 import FloatButton from '../../components/FloatButton/floatButton';
-import { useHistory } from 'react-router-dom';
+import PhotoInput from '../../components/PhotoInput';
 
 import './create-quiz.css';
 
 export default function CreateRoom() {
 
     const history = useHistory();
+    const { id } = useParams();
 
+    const [photo, setPhoto] = useState("");
+    const [quizImage, setQuizImage] = useState(null);
     const [name, setName] = useState("");
     const [description, setDescription] = useState("");
     const [user, setUser] = useState({});
@@ -22,71 +26,101 @@ export default function CreateRoom() {
         setUser(JSON.parse(localStorage.getItem("@application_user")));
     }, []);
 
+    useEffect(() => {
+        async function getInfo() {
+            const result = await api.get(`/quiz/${id}`);
+
+            let quiz = result.data;
+
+            setName(quiz.name);
+            setDescription(quiz.description);
+            setQuizImage(quiz.quiz_photo);
+        }
+
+        if(id) {
+            getInfo();
+        }
+    }, [id]);
+
     async function handleCreateQuiz(e) {
         e.preventDefault();
 
-        const data = {
-            name,
-            description,
-            user_id: user.user_id
-        }
+        const data = new FormData();
 
-        const response = await api.post('/createQuiz', data);
+        data.append('name', name);
+        data.append('description', description);
+        data.append('quiz_photo', photo);
+
+        var response;
+
+        if(id !== undefined) {
+            response = await api.put(`/updateQuiz/${id}`, data, {
+                headers: {
+                    user_id: user.user_id
+                }
+            });
+        } else {
+            response = await api.post('/createQuiz', data, {
+                headers: {
+                    user_id: user.user_id
+                }
+            });
+        }
 
         if(!response.data) {
             return setError(response);
         }
 
-        history.push(`/create-quiz/${response.data[0]}/questions`);
+        let idQuiz = id === undefined ? response.data : id;
+
+        history.push(`/create-quiz/${idQuiz}/questions`);
     }
 
     return (
         <div id="container">
             <Sidebar />
 
-            <section>
+            <div className="page">
                 <Header onProfile={false} />
-            
-                <form className="create-quiz-form" onSubmit={handleCreateQuiz}>
-                    <img 
-                        className="create-quiz-image" 
-                        src="https://image.shutterstock.com/image-photo/hand-hospital-medical-expert-shows-600w-559764574.jpg" 
-                        alt="Room" 
-                    />
 
-                    <div className="input-field">
-                        <input 
-                            name="quiz-name" 
-                            id="quiz-name" 
-                            type="text" 
-                            placeholder="Quiz name" 
-                            value={name} 
-                            onChange={(e) => setName(e.target.value)} 
-                        />
-                        <label htmlFor="quiz-name">Quiz name</label>
-                    </div>
+                <section>
+                    <form className="create-quiz-form" onSubmit={handleCreateQuiz}>
+                        <PhotoInput setPhoto={setPhoto} imageUrl={quizImage} />
+                        
+                        <div className="input-field">
+                            <input 
+                                name="quiz-name" 
+                                id="quiz-name" 
+                                type="text" 
+                                placeholder="Quiz name" 
+                                value={name} 
+                                onChange={(e) => setName(e.target.value)} 
+                            />
+                            <label htmlFor="quiz-name">Quiz name</label>
+                        </div>
 
-                    <div className="input-field">
-                        <textarea 
-                            name="quiz-description" 
-                            id="quiz-description" 
-                            type="text" 
-                            placeholder="quiz description" 
-                            value={description} 
-                            onChange={(e) => setDescription(e.target.value)} 
-                        />
-                        <label htmlFor="quiz-description">Description</label>
-                    </div>
+                        <div className="input-field">
+                            <textarea 
+                                name="quiz-description" 
+                                id="quiz-description" 
+                                type="text" 
+                                placeholder="quiz description" 
+                                value={description} 
+                                onChange={(e) => setDescription(e.target.value)} 
+                            />
+                            <label htmlFor="quiz-description">Description</label>
+                        </div>
 
-                    <button className="button-circle" type="submit">
-                        <FiChevronRight size={32} color="#FFFFFF" />
-                    </button>
+                        <button className="button-circle" type="submit">
+                            <FiChevronRight size={32} color="#FFFFFF" />
+                        </button>
 
-                    <p className="error-message">{error}</p>                    
-                </form>
-            </section>
+                        <p className="error-message">{error}</p>                    
+                    </form>
+                </section>
 
-            <FloatButton />
+                <FloatButton />
+            </div>
         </div>
     )
 }

@@ -23,7 +23,6 @@ export default {
 
     async update(req, res, next) {
         try {
-            console.log(req);
             const response = await UserService.update(req.body, req.params.id, req.file);
 
             return res.status(200).json(response);

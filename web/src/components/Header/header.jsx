@@ -30,7 +30,13 @@ export default function Header({ onProfile }) {
                     <Link className="header-link-button" to="/profile">
                         <FiChevronLeft size={32} color="#474747" />
                         <p>{user.name}</p>
-                        <img src="https://image.shutterstock.com/image-vector/hand-drawn-modern-man-avatar-600w-1373616899.jpg" alt="User" />
+
+                        {user.user_photo === "" ? null : (
+                            <img 
+                                src={user.user_photo} 
+                                alt="User" 
+                            />
+                        )}
                     </Link>
 
                     <div className="header-link-button-logout" onClick={handleLogout} to="/profile">

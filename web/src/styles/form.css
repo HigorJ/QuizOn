@@ -102,3 +102,27 @@ form h1 {
     color: #474747;
     font-size: 32px;
 }
+
+
+.photo-upload {
+    width: 150px;
+    height: 150px;
+}
+
+.input-file {
+    display: none;
+}
+
+.label-input-file {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 150px;
+    height: 150px;
+    border-radius: 50%;
+    background-color: #EAE8E8;
+    border: 1px solid #2480D6;
+    cursor: pointer;
+    background-position: center;
+    background-size: cover;
+}

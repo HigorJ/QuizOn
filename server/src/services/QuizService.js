@@ -8,10 +8,17 @@ export default {
 
         var allQuizzes = await quizRepo.findAll();
 
+        allQuizzes = allQuizzes.map(item => {
+            return {
+                ...item,
+                quiz_photo: item.quiz_photo !== "" ? `http://localhost:3333/uploads/${item.quiz_photo}` : ""
+            }
+        });
+
         return allQuizzes;
     },
 
-    async create({ name, description, user_id }, file = { filename: '' }) {
+    async create({ name, description }, { user_id }, file = { filename: '' }) {
         if(!name || !description) {
             deleteImage(file.filename);
             throw new CommonError("All fields are required", 400);
@@ -24,7 +31,7 @@ export default {
 
         const quizRepo = new QuizRepository({});
 
-        const result = quizRepo.create({ name, description, author: user_id, quiz_photo: file.filename });
+        const [result] = await quizRepo.create({ name, description, author: user_id, quiz_photo: file.filename });
 
         return result;
     },
@@ -40,6 +47,10 @@ export default {
 
         if(!quiz) {
             throw new CommonError("Quiz id not found!", 400);
+        }
+
+        if(quiz.quiz_photo !== "") {
+            quiz.quiz_photo = `http://localhost:3333/uploads/${quiz.quiz_photo}`;
         }
 
         return quiz;
@@ -69,6 +80,10 @@ export default {
         }
         
         const result = await quizRepo.update(newData);
+
+        if(newData.quiz_photo !== "") {
+            newData.quiz_photo = `http://localhost:3333/uploads/${newData.quiz_photo}`;
+        }
 
         return result;
     },

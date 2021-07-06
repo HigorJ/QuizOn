@@ -40,6 +40,10 @@ export default {
         await passwordHash.checkHash(password, user.password);
 
         delete user.password;
+
+        if(user.user_photo !== "") {
+            user.user_photo = `http://localhost:3333/uploads/${user.user_photo}`;
+        }
         
         return user;
     }, 
@@ -73,6 +77,10 @@ export default {
         delete newData.password;
 
         let updateResult = await userRepo.update(newData);
+
+        if(newData.user_photo !== "") {
+            newData.user_photo = `http://localhost:3333/uploads/${newData.user_photo}`;
+        }
 
         return { updateResult, newData };
     }, 

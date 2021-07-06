@@ -40,17 +40,19 @@ export default function Lobby() {
         <div id="container">
             <Sidebar />
 
-            <section>
+            <div className="page">
                 <Header onProfile={false} />
 
-                <QuizzesList title="All Quizzes" data={allQuizzes} />
+                <section>
+                    <QuizzesList title="All Quizzes" data={allQuizzes} />
 
-                <QuizzesList title="Your Quizzes" data={yourQuizzes} />
+                    <QuizzesList title="Your Quizzes" data={yourQuizzes} />
 
-                <p className="error-message">{error}</p>
-            </section>
+                    <p className="error-message">{error}</p>
+                </section>
 
-            <FloatButton />
+                <FloatButton />
+            </div>
         </div>
     )
 }

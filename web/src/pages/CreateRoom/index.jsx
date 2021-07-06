@@ -23,41 +23,43 @@ export default function CreateRoom() {
         <div id="container">
             <Sidebar />
 
-            <section>
+            <div className="page">
                 <Header  onProfile={false} />
-            
-                <form className="create-room-form" onSubmit={handleCreateRoom}>
-                    <img 
-                        className="create-room-image" 
-                        src="https://image.shutterstock.com/image-photo/hand-hospital-medical-expert-shows-600w-559764574.jpg" 
-                        alt="Room" 
-                    />
-
-                    <div className="input-field">
-                        <input 
-                            name="room-name" 
-                            id="room-name" 
-                            type="text" 
-                            placeholder="Room name" 
+                
+                <section>
+                    <form className="create-room-form" onSubmit={handleCreateRoom}>
+                        <img 
+                            className="create-room-image" 
+                            src="https://image.shutterstock.com/image-photo/hand-hospital-medical-expert-shows-600w-559764574.jpg" 
+                            alt="Room" 
                         />
-                        <label htmlFor="room-name">Room name</label>
-                    </div>
 
-                    <div className="input-field">
-                        <input 
-                            name="room-password" 
-                            id="room-password" 
-                            type="password" 
-                            placeholder="Room password" 
-                        />
-                        <label htmlFor="room-password">Room password</label>
-                    </div>
+                        <div className="input-field">
+                            <input 
+                                name="room-name" 
+                                id="room-name" 
+                                type="text" 
+                                placeholder="Room name" 
+                            />
+                            <label htmlFor="room-name">Room name</label>
+                        </div>
 
-                    <button type="submit">Create room</button>
-                </form>
-            </section>
-            
-            <FloatButton />
+                        <div className="input-field">
+                            <input 
+                                name="room-password" 
+                                id="room-password" 
+                                type="password" 
+                                placeholder="Room password" 
+                            />
+                            <label htmlFor="room-password">Room password</label>
+                        </div>
+
+                        <button type="submit">Create room</button>
+                    </form>
+                </section>
+                
+                <FloatButton />
+            </div> 
         </div>
     )
 }

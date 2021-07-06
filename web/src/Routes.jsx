@@ -24,7 +24,7 @@ export default function Routes() {
         <Route path="/quizzes/all/:id" exact component={QuizInfo} />
         <Route path="/quizzes/all/:id/:room" exact component={Quiz} />
         <Route path="/quizzes/rooms/create-room" exact component={CreateRoom} />
-        <Route path="/create-quiz" exact component={CreateQuiz} />
+        <Route path="/create-quiz/:id?" exact component={CreateQuiz} />
         <Route path="/create-quiz/:id/questions" exact component={CreateQuestions} />
       </Switch>
     </BrowserRouter>
