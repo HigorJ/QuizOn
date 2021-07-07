@@ -1,0 +1,17 @@
+.quiz-end {
+    width: 50%;
+    height: 400px;
+    background-color: #dadada;
+    border-radius: 10px;
+
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
+.final-score {
+    font-size: 24px;
+    color: #2480D6;
+    font-weight: bold;
+}

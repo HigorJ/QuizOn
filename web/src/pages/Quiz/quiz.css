@@ -3,12 +3,6 @@
     font-size: 32px;
 }
 
-.quiz-question-image {
-    width: 550px;
-    height: 230px;
-    border-radius: 50px;
-}
-
 .option-field {
     width: 450px;
     background-color: #2480D6;

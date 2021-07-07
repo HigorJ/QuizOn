@@ -17,28 +17,23 @@ export default function CreateQuestions() {
     const [question, setQuestion] = useState({ question_text: "", alternatives: [] });
     const [allQuestions, setAllQuestions] = useState([]);
     const [error, setError] = useState([]);
-    const [totalCorrect, setTotalCorrect] = useState(0);
 
     useEffect(() => {
         async function getData() {
             try {
-                let result = await api.get(`/quiz/${id}/questions`);
+                let response = await api.get(`/quiz/${id}/questions`);
 
-                let tmpQuestions = result.data;
+                let tmpQuestions = response.data;
     
                 if(tmpQuestions.length > 0) {
-                    tmpQuestions = await  Promise.all(tmpQuestions.map(async (tmpQuestion) => {
+                    await Promise.all(tmpQuestions.map(async (tmpQuestion) => {
                         let altResult = await api.get(`/quiz/${id}/questions/${tmpQuestion.question_id}`);
-                        let tmpAlt = altResult.data;
         
-                        tmpQuestion = { ...tmpQuestion, alternatives: tmpAlt };
-        
-                        return tmpQuestion;
+                        tmpQuestion.alternatives = altResult.data;
                     }));
         
                     setCurrentQuestion(tmpQuestions.length - 1);
                     setQuestion(tmpQuestions[tmpQuestions.length - 1]);
-                    setTotalCorrect(1);
                     setAllQuestions(tmpQuestions);
                 }
             } catch (error) {
@@ -51,37 +46,32 @@ export default function CreateQuestions() {
 
     function handlePreviousQuestion() {
         if(currentQuestion > 0) {
-            let [previousQuestion] = allQuestions.filter((value, index) => index === currentQuestion - 1);
+            let previousQuestion = allQuestions[currentQuestion - 1];
 
             setQuestion(previousQuestion);
-
-            setTotalCorrect(1);
             setCurrentQuestion(currentQuestion - 1);
         }
     }
 
     async function handleNextQuestion() {
-        if(totalCorrect !== 1) {
-            return setError("Only one alternative can be correct!");
+        if(checkCorrects() !== 1) {
+            return setError("Choose one alternative to be correct.");
         }
 
-        if(question.question_id) {
-            await handleUpdateQuestion();
-        } else {
+        if(!question.question_id) {
             await handleCreateQuestion();
+        } else {
+            await handleUpdateQuestion();
         }
-    
+
         if(!allQuestions[currentQuestion + 1]) {
             setQuestion({ question_text: "", alternatives: [] });
-            setTotalCorrect(0);
         } else {
             setQuestion(allQuestions[currentQuestion + 1]);
-            setTotalCorrect(1)
         }
 
         setError("");
-        setCurrentQuestion(currentQuestion + 1);
-        
+        setCurrentQuestion(currentQuestion + 1);  
     }
 
     async function handleUpdateQuestion() {
@@ -93,7 +83,7 @@ export default function CreateQuestions() {
             return setError(response);
         }
 
-        allQuestionsAux[currentQuestion] = { ...question };
+        allQuestionsAux[currentQuestion] = question;
 
         setAllQuestions(allQuestionsAux);
     }
@@ -134,12 +124,6 @@ export default function CreateQuestions() {
 
         aux[index].is_correct = e.target.checked;
 
-        if(e.target.checked) {
-            setTotalCorrect(totalCorrect + 1);
-        } else if(totalCorrect !== 0) {
-            setTotalCorrect(totalCorrect - 1);
-        }
-
         setQuestion({ ...question, alternatives: aux });
     }
 
@@ -153,12 +137,24 @@ export default function CreateQuestions() {
         history.push('/lobby');
     }
 
+    function checkCorrects() {
+        var cont = 0;
+
+        question.alternatives.forEach(alternative => {
+            if(alternative.is_correct) {
+                cont++;
+            }
+        });
+
+        return cont;
+    }
+
     return (
         <div id="container">
             <Sidebar />
             
             <div className="page">
-                <Header  onProfile={false} />
+                <Header onProfile={false} />
 
                 <section>
                     <div className="create-questions-form">

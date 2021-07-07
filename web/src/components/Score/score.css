@@ -1,15 +1,3 @@
-.quiz-score-sidebar {
-    width: 15vw;
-    height: 100%;
-    padding: 25px;
-    display: flex;
-    position: fixed;
-    color: #E1E1E1;
-    flex-direction: column;
-    align-items: center;
-    background-color: #2480D6;
-}
-
 .quiz-title-ranking {
     color: #E1E1E1;
     font-size: 32px;

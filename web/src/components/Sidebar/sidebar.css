@@ -1,20 +1,3 @@
-aside {
-    height: 100vh;
-    padding: 25px;
-    display: flex;
-    color: #E1E1E1;
-    flex-direction: column;
-    align-items: center;
-    background-color: #2480D6;
-}
-
-aside h1 {
-    color: #E1E1E1;
-    font-size: 38px;
-    text-decoration: underline;
-    cursor: pointer;
-}
-
 aside .room-code {
     height: 100%;
     display: flex;

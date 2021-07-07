@@ -3,6 +3,7 @@ import { Link, useParams } from 'react-router-dom';
 import { FiLogOut, FiShare2 } from 'react-icons/fi';
 import api from '../../services/api.js';
 
+import QuizEnd from '../../components/QuizEnd/index.jsx';
 import Score from '../../components/Score/index';
 
 import './quiz.css';
@@ -14,6 +15,8 @@ export default function Quiz() {
     const [alternatives, setAlternatives] = useState([]);
     const [score, setScore] = useState(0);
     const [error, setError] = useState("");
+    const [end, setEnd] = useState(false);
+    const [timer, setTimer] = useState(20);
 
     useEffect(() => {
         async function getQuizInfo() {
@@ -47,7 +50,6 @@ export default function Quiz() {
 
                     setAlternatives(response.data);
                 }
-                
             } catch (error) {
                 setError(error);
             }
@@ -58,12 +60,26 @@ export default function Quiz() {
         }
     }, [id, questions, currentQuestion]);
 
+    useEffect(() => {
+        if(timer > 0) {
+            const interval = setInterval(() => {
+                setTimer(timer - 1)
+            }, 1000);
+    
+            return () => {
+                clearInterval(interval);
+            }
+        }
+    }, [timer]);
+
     function toNextQuestion() {
         setCurrentQuestion(currentQuestion + 1);
 
         if(currentQuestion >= questions.length - 1) {
-            setError("You finished the quiz!");
+            setEnd(true);
         }
+
+        setTimer(20);
     }
 
     function handleCheckAnswer(is_correct) {
@@ -91,11 +107,13 @@ export default function Quiz() {
 
                 <section>
                     <div className="content">
-                        { (questions.length > 0 && currentQuestion < questions.length) && (
+                        {end && (
+                            <QuizEnd score={score} />
+                        )}
+
+                        {(questions.length > 0 && currentQuestion < questions.length) && (
                             <>
                                 <h1 className="quiz-question-title">{questions[currentQuestion].question_text}</h1>
-
-                                <img className="quiz-question-image" src="https://image.shutterstock.com/image-photo/hand-hospital-medical-expert-shows-600w-559764574.jpg" alt="Quiz do matrix" />
             
                                 {alternatives.map((item, index) => (
                                     <div key={item.alternative_id} className="option-field" onClick={() => handleCheckAnswer(item.is_correct)}>
@@ -109,7 +127,7 @@ export default function Quiz() {
 
                     <p className="error-message">{error}</p>
                     <div className="div-timer">
-                        <p>Timer: 10s</p>
+                        <p>Timer: {timer}s</p>
                     </div>
                 </section>
             </div>

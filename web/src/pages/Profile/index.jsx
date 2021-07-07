@@ -95,7 +95,7 @@ export default function Profile() {
                 
                 <section>
                     <div className="content">
-                        <PhotoInput setPhoto={setPhoto} imageUrl={user.user_photo} />
+                        <PhotoInput setPhoto={setPhoto} imageUrl={user.user_photo !== "" ? user.user_photo : null} />
 
                         {!deleteAccount && (
                             <>
