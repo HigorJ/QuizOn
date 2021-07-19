@@ -1,0 +1,39 @@
+.participants-preparation-room {
+    width: 80px;
+    height: 80px;
+    
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    margin-left: 5px;
+
+    border: 1px solid #aa3f3f;
+    border-radius: 25%;
+    padding: 5px;
+}
+
+.preparation-room-title {
+    display: flex;
+    align-self: center;
+    color: #5E5E5E;
+    font-size: 32px;
+}
+
+.no-image-user-icon {
+    width: 50px;
+    height: 50px;
+    border-radius: 25px;
+}
+
+.div-user-image img {
+    height: 50px;
+    width: 50px;
+    border-radius: 25px;
+    background-position: center;
+    background-size: cover;
+}
+
+.user-info {
+    text-align: center;
+}

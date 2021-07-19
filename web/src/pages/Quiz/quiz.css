@@ -31,3 +31,9 @@
     font-size: 18px;
     text-align: center;
 }
+
+@media only screen and (max-width: 950px) {
+    .option-field {
+        width: 100%;
+    }
+}

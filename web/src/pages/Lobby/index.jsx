@@ -1,15 +1,15 @@
 import React, { useEffect, useState } from 'react';
 import api from '../../services/api.js';
+import socket from '../../services/socket.js';
 
-import Sidebar from '../../components/Sidebar/sidebar';
-import Header from '../../components/Header/header';
-import FloatButton from '../../components/FloatButton/floatButton';
+import Sidebar from '../../components/Sidebar';
+import Header from '../../components/Header';
+import FloatButton from '../../components/FloatButton';
 import QuizzesList from '../../components/QuizzesListComponent';
 
 import '../../styles/pages.css';
 
 export default function Lobby() {
-
     const [allQuizzes, setAllQuizzes] = useState([]);
     const [yourQuizzes, setYourQuizzes] = useState([]);
     const [error, setError] = useState("");
@@ -17,6 +17,8 @@ export default function Lobby() {
     useEffect(() => {
         async function getQuizInfo() {
             const user = JSON.parse(localStorage.getItem("@application_user"));
+
+            socket.welcome(user.user_id)
 
             try {
                 const AllQ = await api.get('/quizzes');

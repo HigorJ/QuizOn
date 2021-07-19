@@ -3,9 +3,9 @@ import { useHistory, useParams } from 'react-router-dom';
 import api from '../../services/api.js';
 import { FiCameraOff } from 'react-icons/fi';
 
-import Sidebar from '../../components/Sidebar/sidebar';
-import Header from '../../components/Header/header';
-import FloatButton from '../../components/FloatButton/floatButton';
+import Sidebar from '../../components/Sidebar';
+import Header from '../../components/Header';
+import FloatButton from '../../components/FloatButton';
 
 import './quiz-info.css';
 
@@ -76,13 +76,13 @@ export default function QuizInfo() {
                         <p className="quiz-description">{quizInfo.description}</p>
                     </div>
 
-                    <div className='quiz-buttons'>
-                        <button onClick={() => history.push(`/quizzes/rooms/create-room`)}>Create room</button>
+                    <div className='div-buttons'>
+                        <button onClick={() => history.push(`/quizzes/all/${id}/rooms/create-room`)}>Create room</button>
                         <button onClick={() => history.push(`/quizzes/all/${id}/${ROOM_ID}`)}>Random room</button>
                     </div>
 
                     { quizInfo.author === user.user_id && (
-                        <div className="edit-quiz">
+                        <div className="div-buttons">
                             <button className="btn-edit-quiz" onClick={handleUpdateQuiz}>Edit Quiz</button>
                             <button className="btn-delete-quiz" onClick={handleDeleteQuiz}>Delete Quiz</button>
                         </div>

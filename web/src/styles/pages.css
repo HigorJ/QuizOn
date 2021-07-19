@@ -1,6 +1,6 @@
 #container {
     display: grid;
-    grid-template-columns: 1fr 5fr;
+    grid-template-columns: 1fr 4fr;
     grid-template-rows: 1fr;
     grid-template-areas: "sidebar content";
 }
@@ -26,7 +26,6 @@ aside h1 {
 .page {
     width: 100%;
     padding: 10px;
-
     display: flex;
     flex-direction: column;
     grid-area: "content";
@@ -79,7 +78,6 @@ section .content {
     flex-direction: column;
     align-items: center;
     justify-content: center;
-    margin: 10px 0px;
     background-color: #E5E5E5;
     border-radius: 10px;
     padding: 10px;
@@ -95,4 +93,20 @@ section .content {
 
 .content .quizzes-list-title:hover {
     transform: scale(1.1);
+}
+
+
+@media only screen and (max-width: 950px) {
+    #container {
+        display: grid;
+        grid-template-columns: 1fr;
+        grid-template-rows: max-content max-content;
+        grid-template-areas: "sidebar"
+                             "content";
+    }
+
+    aside {
+        height: 300px;
+        grid-area: "sidebar";
+    }
 }

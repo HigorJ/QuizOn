@@ -24,7 +24,7 @@ export default function Login() {
         }
 
         localStorage.setItem('@application_user', JSON.stringify(response.data));
-
+        
         history.push('/lobby');
     }
 

@@ -1,15 +1,19 @@
-import React, { useEffect, useState } from 'react';
-import { Link, useParams } from 'react-router-dom';
+import React, { useEffect, useState, useCallback } from 'react';
+import { Link, useParams, useHistory } from 'react-router-dom';
 import { FiLogOut, FiShare2 } from 'react-icons/fi';
-import api from '../../services/api.js';
 
+import socket from '../../services/socket.js';
+import api from '../../services/api.js';
 import QuizEnd from '../../components/QuizEnd/index.jsx';
 import Score from '../../components/Score/index';
 
 import './quiz.css';
 
 export default function Quiz() {
-    const { id } = useParams();
+    const history = useHistory();
+    const { id, room } = useParams();
+
+    const [user, setUser] = useState({});
     const [currentQuestion, setCurrentQuestion] = useState(0);
     const [questions, setQuestions] = useState([]);
     const [alternatives, setAlternatives] = useState([]);
@@ -17,10 +21,25 @@ export default function Quiz() {
     const [error, setError] = useState("");
     const [end, setEnd] = useState(false);
     const [timer, setTimer] = useState(20);
+    const [wasAnswered, setWasAnswered] = useState(false);
+    const [checkToNextQuestion, setCheckToNextQuestion] = useState(false);
+
+    const toNextQuestion = useCallback(() => {
+        setCurrentQuestion(currentQuestion + 1);
+
+        if(currentQuestion >= questions.length - 1) {
+            setEnd(true);
+        }
+
+        setTimer(20);
+        setWasAnswered(false);
+        setCheckToNextQuestion(false);
+    }, [currentQuestion, questions.length]);
 
     useEffect(() => {
         async function getQuizInfo() {
             try {
+                setUser(JSON.parse(localStorage.getItem("@application_user")));
                 const response = await api.get(`/quiz/${id}/questions`);
 
                 if(!response.data) {
@@ -28,13 +47,18 @@ export default function Quiz() {
                 }
 
                 setQuestions(response.data);
+                socket.onToNextQuestion(setCheckToNextQuestion);
+
+                if(checkToNextQuestion) {
+                    toNextQuestion();
+                }
             } catch (error) {
                 setError(error)
             }
         }
 
         getQuizInfo();
-    }, [id]);
+    }, [id, toNextQuestion, checkToNextQuestion]);    
 
     useEffect(() => {
         async function getAlternatives() {
@@ -61,7 +85,7 @@ export default function Quiz() {
     }, [id, questions, currentQuestion]);
 
     useEffect(() => {
-        if(timer > 0) {
+        if(timer > 0 && !end) {
             const interval = setInterval(() => {
                 setTimer(timer - 1)
             }, 1000);
@@ -69,30 +93,40 @@ export default function Quiz() {
             return () => {
                 clearInterval(interval);
             }
+        } else {
+            setCheckToNextQuestion(true);
         }
-    }, [timer]);
-
-    function toNextQuestion() {
-        setCurrentQuestion(currentQuestion + 1);
-
-        if(currentQuestion >= questions.length - 1) {
-            setEnd(true);
-        }
-
-        setTimer(20);
-    }
+    }, [timer, end]);
 
     function handleCheckAnswer(is_correct) {
-        toNextQuestion();
-
-        if(is_correct && currentQuestion < questions.length) {
-            setScore(score + 1);
+        if(!wasAnswered) {
+            if(is_correct && currentQuestion < questions.length) {
+                setScore(score + 1);
+            }
+    
+            socket.answer({ 
+                is_correct, 
+                room_name: room, 
+                user_id: user.user_id 
+            });
+    
+            socket.checkAnswers(room);
+            setWasAnswered(true);
         }
+    }
+
+    function handleExitQuiz() {
+        socket.participantLeft({
+            user_id: user.user_id,
+            room_name: room
+        });
+
+        history.push('/lobby');
     }
 
     return (
         <div id="container">
-            <Score score={score} />
+            <Score score={score} room_name={room} />
 
             <div className="page">
                 <header>
@@ -100,15 +134,15 @@ export default function Quiz() {
                         <FiShare2 size={32} color="#2480D6" />
                     </Link>
 
-                    <Link style={{ margin: "10px" }} to="/lobby">
+                    <div style={{ margin: "10px", cursor: "pointer" }} onClick={handleExitQuiz}>
                         <FiLogOut size={32} color="#CC5050" />
-                    </Link>                    
+                    </div>                    
                 </header>
 
                 <section>
                     <div className="content">
                         {end && (
-                            <QuizEnd score={score} />
+                            <QuizEnd score={score} room={room} user_id={user.user_id} />
                         )}
 
                         {(questions.length > 0 && currentQuestion < questions.length) && (

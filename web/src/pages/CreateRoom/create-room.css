@@ -2,11 +2,10 @@
     display: flex;
     flex-direction: column;
     width: 100%;
+    height: fit-content;
     max-width: 400px;
-    align-items: center;
-    justify-self: center;
     align-self: center;
-    height: 100%;
+    justify-self: flex-start;
 }
 
 .create-room-form img {

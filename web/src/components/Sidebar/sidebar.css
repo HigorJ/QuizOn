@@ -1,4 +1,4 @@
-aside .room-code {
+aside .room-name {
     height: 100%;
     display: flex;
     flex-direction: column;
@@ -6,7 +6,7 @@ aside .room-code {
     justify-content: center;
 }
 
-.room-code button {
+.room-name button {
     width: 250px;
     height: 50px;
     color: #E1E1E1;

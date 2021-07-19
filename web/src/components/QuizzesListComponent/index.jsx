@@ -16,14 +16,16 @@ export default function QuizzesList({ title, data }) {
             )}
 
             <div className="quizzes-items">
-                {data.map((item) => (
-                    <div key={item.quiz_id} className="quiz-item" onClick={() => history.push(`/quizzes/all/${item.quiz_id}`)}>
-                        {item.quiz_photo === "" ? (
-                            <FiCameraOff size={48} color="#474747" />
+                {data.map((quiz) => (
+                    <div key={quiz.quiz_id} className="quiz-item" onClick={() => history.push(`/quizzes/all/${quiz.quiz_id}`)}>
+                        {quiz.quiz_photo === "" ? (
+                            <div className="quiz-default-image">
+                                <FiCameraOff size={48} color="#474747" />
+                            </div>
                         ) : (
-                            <img src={item.quiz_photo} alt={item.name} />
+                            <img src={quiz.quiz_photo} alt={quiz.name} />
                         )}
-                        <p>{item.name}</p>
+                        <p>{quiz.name}</p>
                     </div>
                 ))}
             </div>

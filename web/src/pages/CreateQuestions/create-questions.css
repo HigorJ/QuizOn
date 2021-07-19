@@ -12,6 +12,8 @@
 .create-questions-form .pre-configs-quiz {
     width: 100%;
     display: flex;
+    justify-content: center;
+    align-items: center;
 }
 
 #input-field-number-questions {
@@ -44,4 +46,15 @@
     height: 30px;
     margin-left: 5px;
     cursor: pointer;
+}
+
+.remove-question {
+    margin-left: 5px;
+    background-color: #e7cdcd;
+    width: 50px;
+    height: 50px;
+}
+
+.remove-question:hover {
+    background-color: #e6afaf;
 }

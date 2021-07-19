@@ -7,6 +7,7 @@ import Lobby from './pages/Lobby';
 import Profile from './pages/Profile';
 import QuizzesList from './pages/QuizzesList';
 import QuizInfo from './pages/QuizInfo';
+import PreparationPage from './pages/PreparetionPage';
 import Quiz from './pages/Quiz';
 import CreateRoom from './pages/CreateRoom';
 import CreateQuiz from './pages/CreateQuiz';
@@ -22,8 +23,9 @@ export default function Routes() {
         <Route path="/profile" exact component={Profile} />
         <Route path="/quizzes/:title" exact component={QuizzesList} />
         <Route path="/quizzes/all/:id" exact component={QuizInfo} />
+        <Route path="/quizzes/all/:id/:room/waiting-participants" exact component={PreparationPage} />
         <Route path="/quizzes/all/:id/:room" exact component={Quiz} />
-        <Route path="/quizzes/rooms/create-room" exact component={CreateRoom} />
+        <Route path="/quizzes/all/:id/rooms/create-room" exact component={CreateRoom} />
         <Route path="/create-quiz/:id?" exact component={CreateQuiz} />
         <Route path="/create-quiz/:id/questions" exact component={CreateQuestions} />
       </Switch>

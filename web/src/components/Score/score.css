@@ -8,9 +8,15 @@
 
 .user-score-component {
     display: flex;
-    flex-direction: row;
+    flex-direction: column;
     align-items: center;
     color: #E1E1E1;
+}
+
+.participant-component {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
     margin-bottom: 15px;
 }
 
@@ -30,4 +36,14 @@
 
 .user-score-component img {
     font-size: 16px;
+}
+
+@media only screen and (max-width: 950px) {
+    .user-score-component {
+        flex-direction: row;
+    }
+
+    .participant-component {
+        flex-direction: column;
+    }
 }

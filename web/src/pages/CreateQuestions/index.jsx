@@ -1,11 +1,11 @@
 import React, { useState, useEffect } from 'react';
 import { useHistory, useParams } from 'react-router-dom';
-import { FiChevronRight, FiChevronLeft, FiX, FiCheck, FiPlus } from 'react-icons/fi';
+import { FiChevronRight, FiChevronLeft, FiX, FiCheck, FiPlus, FiTrash2 } from 'react-icons/fi';
 
 import api from '../../services/api';
-import Sidebar from '../../components/Sidebar/sidebar';
-import Header from '../../components/Header/header';
-import FloatButton from '../../components/FloatButton/floatButton';
+import Sidebar from '../../components/Sidebar';
+import Header from '../../components/Header';
+import FloatButton from '../../components/FloatButton';
 
 import './create-questions.css';
 
@@ -101,6 +101,16 @@ export default function CreateQuestions() {
         ]);
     }
 
+    async function handleRemoveQuestion() {
+        if(question.question_id) {
+            await api.delete(`/quiz/${id}/${question.question_id}`);
+        }
+
+        setAllQuestions(allQuestions.filter((value, index) => index !== currentQuestion));
+        setQuestion(allQuestions[currentQuestion - 1]);
+        setCurrentQuestion(currentQuestion - 1);
+    }
+
     function handleAddAlternative() {
         setQuestion({ 
             ...question, 
@@ -172,6 +182,10 @@ export default function CreateQuestions() {
                                 />
                                 <label htmlFor="question-text">Question Text</label>
                             </div>
+
+                            <button className="remove-question" onClick={handleRemoveQuestion}>
+                                <FiTrash2 size={32} color="#CC5050" />
+                            </button>
                         </div>
 
                         {question.alternatives.map((value, index) => (

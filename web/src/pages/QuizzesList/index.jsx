@@ -1,9 +1,9 @@
 import React from 'react';
 import { useParams, Link, useHistory } from 'react-router-dom';
 
-import Sidebar from '../../components/Sidebar/sidebar';
-import Header from '../../components/Header/header';
-import FloatButton from '../../components/FloatButton/floatButton';
+import Sidebar from '../../components/Sidebar';
+import Header from '../../components/Header';
+import FloatButton from '../../components/FloatButton';
 
 import '../../styles/pages.css';
 import './quizzes-list.css'

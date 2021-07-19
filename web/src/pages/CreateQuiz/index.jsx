@@ -3,9 +3,9 @@ import { useHistory, useParams } from 'react-router-dom';
 import { FiChevronRight } from 'react-icons/fi';
 
 import api from '../../services/api.js';
-import Sidebar from '../../components/Sidebar/sidebar';
-import Header from '../../components/Header/header';
-import FloatButton from '../../components/FloatButton/floatButton';
+import Sidebar from '../../components/Sidebar';
+import Header from '../../components/Header';
+import FloatButton from '../../components/FloatButton';
 import PhotoInput from '../../components/PhotoInput';
 
 import './create-quiz.css';

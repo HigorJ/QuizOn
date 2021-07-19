@@ -1,30 +1,24 @@
 import express from 'express';
-import routes from './routes.js';
+import { createServer } from 'http';
+
 import cors from 'cors';
 import path from 'path';
+
+import routes from './routes.js';
+import ErrorConfig from './utils/ErrorConfig.js';
+import { socketConfig, events } from './socket/Events.js';
 
 const app = express();
 
 app.use(cors());
 app.use(express.json());
 app.use(routes);
-
-app.use((error, req, res, next) => {
-    if(error && error.status) {
-        res.status(error.status).json({
-            error: error.message,
-            status: error.status
-        });
-    } else {
-        console.log(error);
-        return res.status(500).json({ 
-            error: "Try again later!", 
-            status: 500 
-        });
-    }
-});
-
+app.use(ErrorConfig);
 app.use('/uploads', express.static(path.resolve(path.resolve(), 'uploads')));
 
+const httpServer = createServer(app);
 
-app.listen(3333);
+const io = socketConfig(httpServer);
+events(io);
+
+httpServer.listen(3333);

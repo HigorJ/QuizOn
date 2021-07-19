@@ -3,9 +3,9 @@ import { useHistory } from 'react-router-dom';
 import PhotoInput from '../../components/PhotoInput/index.jsx';
 
 import api from '../../services/api.js';
-import Sidebar from '../../components/Sidebar/sidebar';
-import Header from '../../components/Header/header';
-import FloatButton from '../../components/FloatButton/floatButton';
+import Sidebar from '../../components/Sidebar';
+import Header from '../../components/Header';
+import FloatButton from '../../components/FloatButton';
 
 import './profile.css';
 

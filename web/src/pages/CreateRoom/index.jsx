@@ -1,28 +1,47 @@
-import React from 'react';
-import { useHistory } from 'react-router-dom';
+import React, { useState, useEffect } from 'react';
+import { useHistory, useParams } from 'react-router-dom';
+import socket from '../../services/socket';
 
-import Sidebar from '../../components/Sidebar/sidebar';
-import Header from '../../components/Header/header';
-import FloatButton from '../../components/FloatButton/floatButton';
+import Sidebar from '../../components/Sidebar';
+import Header from '../../components/Header';
+import FloatButton from '../../components/FloatButton';
 
 import './create-room.css';
 
 export default function CreateRoom() {
 
     const history = useHistory();
-    const QUIZ_ID = 1;
-    const ROOM_ID = 1;
+    const { id } = useParams();
+
+    const [user, setUser] = useState({});
+    const [roomName, setRoomName] = useState('');
+
+    useEffect(() => {
+        function getInfo() {
+            setUser(JSON.parse(localStorage.getItem("@application_user")));
+        }
+
+        getInfo();
+    }, []);
 
     function handleCreateRoom(e) {
         e.preventDefault();
         
-        history.push(`/quizzes/all/${QUIZ_ID}/${ROOM_ID}`);
+        socket.newRoom({
+            room_name: roomName,
+            user_id: user.user_id,
+            quiz_id: id,
+            name: user.name,
+            user_photo: user.user_photo
+        });
+
+        history.push(`/quizzes/all/${id}/${roomName}/waiting-participants`);
     }
 
     return (
         <div id="container">
             <Sidebar />
-
+            
             <div className="page">
                 <Header  onProfile={false} />
                 
@@ -40,6 +59,8 @@ export default function CreateRoom() {
                                 id="room-name" 
                                 type="text" 
                                 placeholder="Room name" 
+                                value={roomName}
+                                onChange={(e) => setRoomName(e.target.value)}
                             />
                             <label htmlFor="room-name">Room name</label>
                         </div>
