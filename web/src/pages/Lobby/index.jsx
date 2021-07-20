@@ -6,19 +6,22 @@ import Sidebar from '../../components/Sidebar';
 import Header from '../../components/Header';
 import FloatButton from '../../components/FloatButton';
 import QuizzesList from '../../components/QuizzesListComponent';
+import RoomsList from '../../components/RoomsListComponent';
 
 import '../../styles/pages.css';
 
 export default function Lobby() {
     const [allQuizzes, setAllQuizzes] = useState([]);
     const [yourQuizzes, setYourQuizzes] = useState([]);
+    const [allRooms, setAllRooms] = useState({});
     const [error, setError] = useState("");
 
     useEffect(() => {
         async function getQuizInfo() {
             const user = JSON.parse(localStorage.getItem("@application_user"));
 
-            socket.welcome(user.user_id)
+            socket.welcome(user.user_id);
+            socket.onAllRooms(setAllRooms);
 
             try {
                 const AllQ = await api.get('/quizzes');
@@ -46,6 +49,8 @@ export default function Lobby() {
                 <Header onProfile={false} />
 
                 <section>
+                    <RoomsList title="All Rooms" data={allRooms} />
+
                     <QuizzesList title="All Quizzes" data={allQuizzes} />
 
                     <QuizzesList title="Your Quizzes" data={yourQuizzes} />

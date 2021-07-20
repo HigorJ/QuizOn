@@ -9,6 +9,12 @@ const events = {
         });
     },
 
+    onAllRooms(setRooms) {
+        socket.on('all-rooms', (data) => {
+            setRooms(data.rooms)
+        });
+    },
+
     answer(answerData) {
         socket.emit('participant-answer', answerData);
     },

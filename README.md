@@ -5,7 +5,8 @@
  - [x] Criar, atualizar, consultar e deletar quizzes.
  - [x] Responder perguntas e aumentar Score.
  - [X] Upload de imagens no Backend.
- - [ ] SocketIO para criar salas e ter funcionalidades online.
+ - [X] SocketIO para criar salas e ter funcionalidades online.
+ - [ ] Página que mostra todos os quizzes, seus quizzes ou todas as salas.
  - [ ] Mudar senha de um usuário.
  - [ ] Recuperar senha.
 
@@ -80,7 +81,7 @@
 
 <br />
 
-### Telas
+### Telas (Modelo antigo, algumas coisas foram alteradas)
 - Ao iniciar, está será a tela apresentada
 
 <p align="center">

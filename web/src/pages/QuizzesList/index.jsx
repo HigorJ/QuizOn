@@ -5,8 +5,7 @@ import Sidebar from '../../components/Sidebar';
 import Header from '../../components/Header';
 import FloatButton from '../../components/FloatButton';
 
-import '../../styles/pages.css';
-import './quizzes-list.css'
+import './quizzes-list.css';
 
 export default function QuizList() {
 
@@ -23,47 +22,167 @@ export default function QuizList() {
                 
                 <section>
                     <div className="content">
-                        <Link className="quizzes-list-title" to={`/quizzes/${title}`}>
+                        <Link className="quizzes-titles" to={`/quizzes/${title}`}>
                             { title }
                         </Link>
 
-                        <div className="current-quiz-items">
-                            <div className="quiz-item" onClick={() => history.push(`/quizzes/all/${tempID}`)}>
+                        <div className="items-list" style={{ flexWrap: 'wrap', overflowY: 'auto' }}>
+                            <div className="div-item" onClick={() => history.push(`/quizzes/all/${tempID}`)}>
                                 <img src="https://image.shutterstock.com/image-photo/hand-hospital-medical-expert-shows-600w-559764574.jpg" alt="Quiz do matrix" />
                                 <p>Quiz do Matrix</p>
                             </div>
 
-                            <div className="quiz-item" onClick={() => history.push(`/quizzes/all/${tempID}`)}>
+                            <div className="div-item" onClick={() => history.push(`/quizzes/all/${tempID}`)}>
                                 <img src="https://image.shutterstock.com/image-photo/hand-hospital-medical-expert-shows-600w-559764574.jpg" alt="Quiz do matrix" />
                                 <p>Quiz do Matrix</p>
                             </div>
 
-                            <div className="quiz-item" onClick={() => history.push(`/quizzes/all/${tempID}`)}>
+                            <div className="div-item" onClick={() => history.push(`/quizzes/all/${tempID}`)}>
                                 <img src="https://image.shutterstock.com/image-photo/hand-hospital-medical-expert-shows-600w-559764574.jpg" alt="Quiz do matrix" />
                                 <p>Quiz do Matrix</p>
                             </div>
 
-                            <div className="quiz-item" onClick={() => history.push(`/quizzes/all/${tempID}`)}>
+                            <div className="div-item" onClick={() => history.push(`/quizzes/all/${tempID}`)}>
                                 <img src="https://image.shutterstock.com/image-photo/hand-hospital-medical-expert-shows-600w-559764574.jpg" alt="Quiz do matrix" />
                                 <p>Quiz do Matrix</p>
                             </div>
 
-                            <div className="quiz-item" onClick={() => history.push(`/quizzes/all/${tempID}`)}>
+                            <div className="div-item" onClick={() => history.push(`/quizzes/all/${tempID}`)}>
                                 <img src="https://image.shutterstock.com/image-photo/hand-hospital-medical-expert-shows-600w-559764574.jpg" alt="Quiz do matrix" />
                                 <p>Quiz do Matrix</p>
                             </div>
 
-                            <div className="quiz-item" onClick={() => history.push(`/quizzes/all/${tempID}`)}>
+                            <div className="div-item" onClick={() => history.push(`/quizzes/all/${tempID}`)}>
                                 <img src="https://image.shutterstock.com/image-photo/hand-hospital-medical-expert-shows-600w-559764574.jpg" alt="Quiz do matrix" />
                                 <p>Quiz do Matrix</p>
                             </div>
 
-                            <div className="quiz-item" onClick={() => history.push(`/quizzes/all/${tempID}`)}>
+                            <div className="div-item" onClick={() => history.push(`/quizzes/all/${tempID}`)}>
                                 <img src="https://image.shutterstock.com/image-photo/hand-hospital-medical-expert-shows-600w-559764574.jpg" alt="Quiz do matrix" />
                                 <p>Quiz do Matrix</p>
                             </div>
 
-                            <div className="quiz-item" onClick={() => history.push(`/quizzes/all/${tempID}`)}>
+                            <div className="div-item" onClick={() => history.push(`/quizzes/all/${tempID}`)}>
+                                <img src="https://image.shutterstock.com/image-photo/hand-hospital-medical-expert-shows-600w-559764574.jpg" alt="Quiz do matrix" />
+                                <p>Quiz do Matrix</p>
+                            </div>
+
+                            <div className="div-item" onClick={() => history.push(`/quizzes/all/${tempID}`)}>
+                                <img src="https://image.shutterstock.com/image-photo/hand-hospital-medical-expert-shows-600w-559764574.jpg" alt="Quiz do matrix" />
+                                <p>Quiz do Matrix</p>
+                            </div>
+
+                            <div className="div-item" onClick={() => history.push(`/quizzes/all/${tempID}`)}>
+                                <img src="https://image.shutterstock.com/image-photo/hand-hospital-medical-expert-shows-600w-559764574.jpg" alt="Quiz do matrix" />
+                                <p>Quiz do Matrix</p>
+                            </div>
+
+                            <div className="div-item" onClick={() => history.push(`/quizzes/all/${tempID}`)}>
+                                <img src="https://image.shutterstock.com/image-photo/hand-hospital-medical-expert-shows-600w-559764574.jpg" alt="Quiz do matrix" />
+                                <p>Quiz do Matrix</p>
+                            </div>
+
+                            <div className="div-item" onClick={() => history.push(`/quizzes/all/${tempID}`)}>
+                                <img src="https://image.shutterstock.com/image-photo/hand-hospital-medical-expert-shows-600w-559764574.jpg" alt="Quiz do matrix" />
+                                <p>Quiz do Matrix</p>
+                            </div>
+
+                            <div className="div-item" onClick={() => history.push(`/quizzes/all/${tempID}`)}>
+                                <img src="https://image.shutterstock.com/image-photo/hand-hospital-medical-expert-shows-600w-559764574.jpg" alt="Quiz do matrix" />
+                                <p>Quiz do Matrix</p>
+                            </div>
+
+                            <div className="div-item" onClick={() => history.push(`/quizzes/all/${tempID}`)}>
+                                <img src="https://image.shutterstock.com/image-photo/hand-hospital-medical-expert-shows-600w-559764574.jpg" alt="Quiz do matrix" />
+                                <p>Quiz do Matrix</p>
+                            </div>
+
+                            <div className="div-item" onClick={() => history.push(`/quizzes/all/${tempID}`)}>
+                                <img src="https://image.shutterstock.com/image-photo/hand-hospital-medical-expert-shows-600w-559764574.jpg" alt="Quiz do matrix" />
+                                <p>Quiz do Matrix</p>
+                            </div>
+
+                            <div className="div-item" onClick={() => history.push(`/quizzes/all/${tempID}`)}>
+                                <img src="https://image.shutterstock.com/image-photo/hand-hospital-medical-expert-shows-600w-559764574.jpg" alt="Quiz do matrix" />
+                                <p>Quiz do Matrix</p>
+                            </div>
+
+                            <div className="div-item" onClick={() => history.push(`/quizzes/all/${tempID}`)}>
+                                <img src="https://image.shutterstock.com/image-photo/hand-hospital-medical-expert-shows-600w-559764574.jpg" alt="Quiz do matrix" />
+                                <p>Quiz do Matrix</p>
+                            </div>
+
+                            <div className="div-item" onClick={() => history.push(`/quizzes/all/${tempID}`)}>
+                                <img src="https://image.shutterstock.com/image-photo/hand-hospital-medical-expert-shows-600w-559764574.jpg" alt="Quiz do matrix" />
+                                <p>Quiz do Matrix</p>
+                            </div>
+
+                            <div className="div-item" onClick={() => history.push(`/quizzes/all/${tempID}`)}>
+                                <img src="https://image.shutterstock.com/image-photo/hand-hospital-medical-expert-shows-600w-559764574.jpg" alt="Quiz do matrix" />
+                                <p>Quiz do Matrix</p>
+                            </div>
+
+                            <div className="div-item" onClick={() => history.push(`/quizzes/all/${tempID}`)}>
+                                <img src="https://image.shutterstock.com/image-photo/hand-hospital-medical-expert-shows-600w-559764574.jpg" alt="Quiz do matrix" />
+                                <p>Quiz do Matrix</p>
+                            </div>
+
+                            <div className="div-item" onClick={() => history.push(`/quizzes/all/${tempID}`)}>
+                                <img src="https://image.shutterstock.com/image-photo/hand-hospital-medical-expert-shows-600w-559764574.jpg" alt="Quiz do matrix" />
+                                <p>Quiz do Matrix</p>
+                            </div>
+
+                            <div className="div-item" onClick={() => history.push(`/quizzes/all/${tempID}`)}>
+                                <img src="https://image.shutterstock.com/image-photo/hand-hospital-medical-expert-shows-600w-559764574.jpg" alt="Quiz do matrix" />
+                                <p>Quiz do Matrix</p>
+                            </div>
+
+                            <div className="div-item" onClick={() => history.push(`/quizzes/all/${tempID}`)}>
+                                <img src="https://image.shutterstock.com/image-photo/hand-hospital-medical-expert-shows-600w-559764574.jpg" alt="Quiz do matrix" />
+                                <p>Quiz do Matrix</p>
+                            </div>
+
+                            <div className="div-item" onClick={() => history.push(`/quizzes/all/${tempID}`)}>
+                                <img src="https://image.shutterstock.com/image-photo/hand-hospital-medical-expert-shows-600w-559764574.jpg" alt="Quiz do matrix" />
+                                <p>Quiz do Matrix</p>
+                            </div>
+
+                            <div className="div-item" onClick={() => history.push(`/quizzes/all/${tempID}`)}>
+                                <img src="https://image.shutterstock.com/image-photo/hand-hospital-medical-expert-shows-600w-559764574.jpg" alt="Quiz do matrix" />
+                                <p>Quiz do Matrix</p>
+                            </div>
+
+                            <div className="div-item" onClick={() => history.push(`/quizzes/all/${tempID}`)}>
+                                <img src="https://image.shutterstock.com/image-photo/hand-hospital-medical-expert-shows-600w-559764574.jpg" alt="Quiz do matrix" />
+                                <p>Quiz do Matrix</p>
+                            </div>
+
+                            <div className="div-item" onClick={() => history.push(`/quizzes/all/${tempID}`)}>
+                                <img src="https://image.shutterstock.com/image-photo/hand-hospital-medical-expert-shows-600w-559764574.jpg" alt="Quiz do matrix" />
+                                <p>Quiz do Matrix</p>
+                            </div>
+
+                            <div className="div-item" onClick={() => history.push(`/quizzes/all/${tempID}`)}>
+                                <img src="https://image.shutterstock.com/image-photo/hand-hospital-medical-expert-shows-600w-559764574.jpg" alt="Quiz do matrix" />
+                                <p>Quiz do Matrix</p>
+                            </div>
+
+                            <div className="div-item" onClick={() => history.push(`/quizzes/all/${tempID}`)}>
+                                <img src="https://image.shutterstock.com/image-photo/hand-hospital-medical-expert-shows-600w-559764574.jpg" alt="Quiz do matrix" />
+                                <p>Quiz do Matrix</p>
+                            </div>
+
+                            <div className="div-item" onClick={() => history.push(`/quizzes/all/${tempID}`)}>
+                                <img src="https://image.shutterstock.com/image-photo/hand-hospital-medical-expert-shows-600w-559764574.jpg" alt="Quiz do matrix" />
+                                <p>Quiz do Matrix</p>
+                            </div>
+
+                            <div className="div-item" onClick={() => history.push(`/quizzes/all/${tempID}`)}>
+                                <img src="https://image.shutterstock.com/image-photo/hand-hospital-medical-expert-shows-600w-559764574.jpg" alt="Quiz do matrix" />
+                                <p>Quiz do Matrix</p>
+                            </div>
+
+                            <div className="div-item" onClick={() => history.push(`/quizzes/all/${tempID}`)}>
                                 <img src="https://image.shutterstock.com/image-photo/hand-hospital-medical-expert-shows-600w-559764574.jpg" alt="Quiz do matrix" />
                                 <p>Quiz do Matrix</p>
                             </div>

@@ -1,4 +1,6 @@
 #container {
+    position: fixed;
+    
     display: grid;
     grid-template-columns: 1fr 4fr;
     grid-template-rows: 1fr;
@@ -6,6 +8,7 @@
 }
 
 aside {
+    width: 100%;
     height: 100vh;
     padding: 25px;
     display: flex;
@@ -31,11 +34,14 @@ aside h1 {
     grid-area: "content";
 }
 
-.page section {
+section {
     display: flex;
     width: 100%;
+
     flex-direction: column;
     align-self: center;
+    justify-content: center;
+    align-items: center;
 }
 
 .float-button {
@@ -84,23 +90,13 @@ section .content {
     width: 100%;
 }
 
-.content .quizzes-list-title {
-    color: #585858;
-    font-size: 28px;
-    text-decoration: none;
-    transition: all .2s ease-in;
-}
-
-.content .quizzes-list-title:hover {
-    transform: scale(1.1);
-}
-
 
 @media only screen and (max-width: 950px) {
     #container {
+        position: relative;
         display: grid;
         grid-template-columns: 1fr;
-        grid-template-rows: max-content max-content;
+        grid-template-rows: max-content;
         grid-template-areas: "sidebar"
                              "content";
     }
@@ -108,5 +104,9 @@ section .content {
     aside {
         height: 300px;
         grid-area: "sidebar";
+    }
+
+    section {
+        margin-bottom: 70px;
     }
 }

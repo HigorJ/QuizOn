@@ -1,9 +1,9 @@
 #form-container {
-    display: grid;
+    height: 100vh;
 
+    display: grid;
     grid-template-columns: repeat(2, 1fr);
     grid-template-rows: 1fr;
-
     grid-template-areas: "logo form";
 }
 
@@ -125,4 +125,23 @@ form h1 {
     cursor: pointer;
     background-position: center;
     background-size: cover;
+}
+
+@media only screen and (max-width: 950px) {
+    #form-container {
+        grid-template-columns: 1fr;
+        grid-template-rows: max-content;
+
+        grid-template-areas: "logo"
+                             "form";
+    }
+
+    .logo {
+        padding: 25px;
+        height: fit-content;
+    }
+
+    form {
+        height: 100%;
+    }
 }

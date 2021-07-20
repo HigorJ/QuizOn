@@ -2,7 +2,6 @@ import { Server } from 'socket.io';
 
 var users = {};
 var rooms = {};
-var answers = [];
 
 export const socketConfig = (httpServer) => new Server(httpServer, {
     cors: {
@@ -16,6 +15,10 @@ export function events(io) {
             if(!users[data.user_id]) {    
                 users[socket.id] = data.user_id;
             }
+
+            socket.emit('all-rooms', {
+                rooms
+            });
         });
 
         socket.on("disconnect", () => {
@@ -80,14 +83,18 @@ export function events(io) {
 
         socket.on('participant-left', (data) => {
             if(rooms[data.room_name]) {
-                let tempUsers = rooms[data.room_name].users;
-                tempUsers = tempUsers.filter(user => user.user_id !== data.user_id);
-        
-                rooms[data.room_name].users = tempUsers;
-        
-                socket.to(data.room_name).emit('remove-participant', {
-                    user_id: data.user_id
-                });
+                if(rooms[data.room_name].users.length === 1) {
+                    delete rooms[data.room_name];
+                } else {
+                    let tempUsers = rooms[data.room_name].users;
+                    tempUsers = tempUsers.filter(user => user.user_id !== data.user_id);
+            
+                    rooms[data.room_name].users = tempUsers;
+            
+                    socket.to(data.room_name).emit('remove-participant', {
+                        user_id: data.user_id
+                    });
+                }
             }
         });
 

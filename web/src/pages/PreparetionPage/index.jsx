@@ -1,9 +1,8 @@
 import React, { useState, useEffect } from 'react';
-import { useHistory, useParams } from 'react-router-dom';
-import { FiUser } from 'react-icons/fi';
+import { useHistory, useParams, Link } from 'react-router-dom';
+import { FiUser, FiShare2, FiLogOut } from 'react-icons/fi';
 
 import socket from '../../services/socket.js';
-import Header from '../../components/Header';
 import Sidebar from '../../components/Sidebar';
 import FloatButton from '../../components/FloatButton';
 
@@ -51,7 +50,12 @@ export default function PreparationPage() {
     }
 
     function handleExit() {
+        socket.participantLeft({
+            user_id: user.user_id,
+            room_name
+        });
 
+        history.push('/lobby');
     }
 
     return (
@@ -59,7 +63,15 @@ export default function PreparationPage() {
             <Sidebar />
 
             <div className="page">
-                <Header onProfile={false} />
+                <header>
+                    <Link style={{ margin: "10px" }} to="#">
+                        <FiShare2 size={32} color="#2480D6" />
+                    </Link>
+
+                    <div style={{ margin: "10px", cursor: "pointer" }} onClick={handleExit}>
+                        <FiLogOut size={32} color="#CC5050" />
+                    </div>                    
+                </header>
 
                 <section>
                     <h1 className="preparation-room-title">Invite your friends :)</h1>
@@ -90,13 +102,12 @@ export default function PreparationPage() {
                         ))
                         }
                     </div>
+
+                    <div className="div-buttons">
+                        <button onClick={handleReady}>Ready</button>
+                        <button onClick={handleExit}>Exit</button>
+                    </div>
                 </section>
-
-                <div className="div-buttons">
-                    <button onClick={handleReady}>Ready</button>
-                    <button onClick={handleExit}>Exit</button>
-                </div>
-
                 <FloatButton />
             </div>
         </div>
