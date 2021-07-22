@@ -2,15 +2,33 @@ import passwordHash from '../utils/PasswordEncrypt.js';
 import UserRepository from '../repositories/UserRepository.js';
 import CommonError from '../errors/CommonError.js';
 import deleteImage from '../utils/DeleteImage.js';
+import photoUrl from '../utils/PhotoUrl.js';
 
 export default {
+    async index() {
+        const userRepo = new UserRepository({});
+        var users = await userRepo.findAll();
+
+        if(!users) {
+            throw new CommonError("Error, try again.", 500);
+        }
+
+        users = users.map(user => {
+            user.user_photo = photoUrl(user.user_photo);
+
+            return user;
+        });
+        
+        return users;
+    },
+
     async create({ name, email, password }, file = { filename: '' }) {
         if(!name || !email || !password) {
             deleteImage(file.filename);
             throw new CommonError("All fields are required!", 400);
         }
 
-        const userRepo = new UserRepository({ where: { "email": email }});
+        const userRepo = new UserRepository({where: { "email": email }});
         const user = await userRepo.findOne();
 
         if(user) {
@@ -25,25 +43,19 @@ export default {
         return { message: "Successfully" };
     },
 
-    async show({ email, password }) {
-        if(!email || !password) {
+    async show({ user_id }) {
+        if(!user_id) {
             throw new CommonError("Email and Password are required!", 400);
         }
 
-        const userRepo = new UserRepository({ where: {"email": email}});
+        const userRepo = new UserRepository({where: { user_id }});
         const user = await userRepo.findOne();
 
         if(!user) {
-            throw new CommonError("Email or password incorrect!", 400);
+            throw new CommonError("User not found!", 400);
         }
 
-        await passwordHash.checkHash(password, user.password);
-
-        delete user.password;
-
-        if(user.user_photo !== "") {
-            user.user_photo = `http://localhost:3333/uploads/${user.user_photo}`;
-        }
+        user.user_photo = photoUrl(user.user_photo);
         
         return user;
     }, 
@@ -78,9 +90,7 @@ export default {
 
         let updateResult = await userRepo.update(newData);
 
-        if(newData.user_photo !== "") {
-            newData.user_photo = `http://localhost:3333/uploads/${newData.user_photo}`;
-        }
+        newData.user_photo = photoUrl(newData.user_photo);
 
         return { updateResult, newData };
     }, 

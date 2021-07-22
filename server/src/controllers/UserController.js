@@ -1,6 +1,16 @@
 import UserService from '../services/UserService.js';
 
 export default {
+    async index(req, res, next) {
+        try {
+            const response = await UserService.index();
+
+            return res.status(200).json(response);
+        } catch (error) {
+            next(error);
+        }
+    },
+
     async create(req, res, next) {
         try {
             const response = await UserService.create(req.body, req.file);
@@ -13,7 +23,7 @@ export default {
 
     async show(req, res, next) {
         try {
-            const response = await UserService.show(req.body);
+            const response = await UserService.show(req.params);
 
             return res.status(200).json(response);
         } catch (error) {

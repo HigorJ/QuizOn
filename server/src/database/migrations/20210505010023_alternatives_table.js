@@ -7,6 +7,7 @@ export async function up(knex) {
                 table.string('alternative_text').notNullable();
                 table.boolean('is_correct').notNullable();
                 table.integer('question_source_id').unsigned().notNullable();
+                table.timestamp('created_at').defaultTo(knex.fn.now());
 
                 table.foreign('question_source_id').references('question_id').inTable('questions').onDelete('CASCADE').onUpdate('CASCADE');
             });

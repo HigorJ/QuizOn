@@ -16,20 +16,20 @@ export default function Register() {
     async function handleRegister(e) {
         e.preventDefault();
 
-        const data = new FormData();
+        try {
+            const data = new FormData();
 
-        data.append('name', username);
-        data.append('email', email);
-        data.append('password', password);
-        data.append('user_photo', photo);
+            data.append('name', username);
+            data.append('email', email);
+            data.append('password', password);
+            data.append('user_photo', photo);
 
-        const response = await api.post('/createUser', data);
-    
-        if(!response.data) {
-            return setError(response);
+            await api.post('/createUser', data);
+
+            history.push('/');
+        } catch (error) {
+            setError(error);
         }
-
-        history.push('/');
     }
 
     return (

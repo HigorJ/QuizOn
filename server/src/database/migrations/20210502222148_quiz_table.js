@@ -7,6 +7,7 @@ export async function up(knex) {
                 table.string('description').notNullable();
                 table.string('quiz_photo');
                 table.integer('author').unsigned().notNullable();
+                table.timestamp('created_at').defaultTo(knex.fn.now());
 
                 table.foreign('author').references('user_id').inTable('users').onDelete('CASCADE').onUpdate('CASCADE');
             });

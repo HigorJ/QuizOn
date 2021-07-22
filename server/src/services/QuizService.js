@@ -1,6 +1,7 @@
 import QuizRepository from '../repositories/QuizRepository.js';
 import CommonError from '../errors/CommonError.js';
 import deleteImage from '../utils/DeleteImage.js';
+import photoUrl from '../utils/PhotoUrl.js';
 
 export default {
     async index({ id }) {
@@ -8,11 +9,10 @@ export default {
 
         var allQuizzes = await quizRepo.findAll();
 
-        allQuizzes = allQuizzes.map(item => {
-            return {
-                ...item,
-                quiz_photo: item.quiz_photo !== "" ? `http://localhost:3333/uploads/${item.quiz_photo}` : ""
-            }
+        allQuizzes = allQuizzes.map(quiz => {
+            quiz.quiz_photo = photoUrl(quiz.quiz_photo);
+
+            return quiz;
         });
 
         return allQuizzes;
@@ -49,9 +49,7 @@ export default {
             throw new CommonError("Quiz id not found!", 400);
         }
 
-        if(quiz.quiz_photo !== "") {
-            quiz.quiz_photo = `http://localhost:3333/uploads/${quiz.quiz_photo}`;
-        }
+        quiz.quiz_photo = photoUrl(quiz.quiz_photo);
 
         return quiz;
     }, 
@@ -81,9 +79,7 @@ export default {
         
         const result = await quizRepo.update(newData);
 
-        if(newData.quiz_photo !== "") {
-            newData.quiz_photo = `http://localhost:3333/uploads/${newData.quiz_photo}`;
-        }
+        newData.quiz_photo = photoUrl(newData.quiz_photo);
 
         return result;
     },

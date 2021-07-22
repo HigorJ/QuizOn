@@ -7,6 +7,10 @@ export async function up(knex) {
                 table.string('email', 100).unique().notNullable();
                 table.string('password', 40).notNullable();
                 table.string('user_photo', 200);
+                table.string('password_expires_token');
+                table.timestamp('token_expires_validate');
+
+                table.timestamp('created_at').defaultTo(knex.fn.now());
             });
         }
     });

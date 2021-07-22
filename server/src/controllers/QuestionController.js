@@ -1,4 +1,3 @@
-import knex from '../database/connection.js';
 import QuestionService from '../services/QuestionService.js';
 
 export default {

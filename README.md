@@ -6,9 +6,10 @@
  - [x] Responder perguntas e aumentar Score.
  - [X] Upload de imagens no Backend.
  - [X] SocketIO para criar salas e ter funcionalidades online.
+ - [X] Recuperar senha.
  - [ ] Página que mostra todos os quizzes, seus quizzes ou todas as salas.
  - [ ] Mudar senha de um usuário.
- - [ ] Recuperar senha.
+
 
 ## Tecnologias
 - Backend

@@ -3,6 +3,8 @@ import { BrowserRouter, Route, Switch } from 'react-router-dom';
 
 import Login from './pages/Login';
 import Signup from './pages/Signup';
+import ForgotPassword from './pages/ForgotPassword';
+import ChangePassword from './pages/ChangePassword';
 import Lobby from './pages/Lobby';
 import Profile from './pages/Profile';
 import QuizzesList from './pages/QuizzesList';
@@ -19,6 +21,8 @@ export default function Routes() {
       <Switch>
         <Route path="/" exact component={Login} />
         <Route path="/signup" exact component={Signup} />
+        <Route path="/forgotPassword" exact component={ForgotPassword} />
+        <Route path="/resetPassword/:token" exact component={ChangePassword} />
         <Route path="/lobby" exact component={Lobby} />
         <Route path="/profile" exact component={Profile} />
         <Route path="/quizzes/:title" exact component={QuizzesList} />

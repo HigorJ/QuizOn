@@ -12,20 +12,22 @@ export default function Login() {
     async function handleLogin(e) {
         e.preventDefault();
 
-        const data = {
-            email,
-            password
+        try {
+            const data = {
+                email,
+                password
+            }
+    
+            console.log(data);
+    
+            const response = await api.post('/login', data);
+    
+            localStorage.setItem('@application_user', JSON.stringify(response.data));
+            
+            history.push('/lobby');
+        } catch (error) {
+            setError(error);
         }
-
-        const response = await api.post('/getUser', data);
-
-        if(!response.data) {
-            return setError(response);
-        }
-
-        localStorage.setItem('@application_user', JSON.stringify(response.data));
-        
-        history.push('/lobby');
     }
 
     return (
@@ -68,6 +70,7 @@ export default function Login() {
                 <button type="submit">Log in</button>
 
                 <Link to="/signup" className="styled-link">Sign Up</Link>
+                <Link to="/forgotPassword" className="styled-link">Forgot Password?</Link>
             </form>
         </div>
     )

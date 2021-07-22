@@ -2,16 +2,21 @@ import { Router } from 'express';
 import multer from 'multer';
 import multerConfig from './config/multerConfig.js';
 
+import AuthController from './controllers/AuthController.js';
 import UserController from './controllers/UserController.js';
 import QuizController from './controllers/QuizController.js';
 import QuestionsController from './controllers/QuestionController.js';
 import AlternativesController from './controllers/AlternativeController.js';
+import MailerController from './controllers/MailerController.js';
 
 var upload = multer({ storage: multerConfig });
 
 const routes = Router();
 
-routes.post('/getUser', UserController.show);
+routes.post('/login', AuthController.show);
+
+routes.get('/getUsers', UserController.index);
+routes.get('/getUser/:user_id', UserController.show);
 routes.post('/createUser', upload.single('user_photo'), UserController.create);
 routes.put('/updateUser/:id', upload.single('user_photo'), UserController.update);
 routes.delete('/deleteUser/:id', UserController.delete);
@@ -28,5 +33,8 @@ routes.put('/quiz/:quiz_id/:question_id', QuestionsController.update);
 routes.delete('/quiz/:quiz_id/:question_id', QuestionsController.delete);
 
 routes.get('/quiz/:quiz_id/questions/:question_id', AlternativesController.show);
+
+routes.post('/forgotPassword', MailerController.create);
+routes.post('/changePassword/:token', MailerController.update);
 
 export default routes;
