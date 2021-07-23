@@ -18,8 +18,6 @@ export default function Login() {
                 password
             }
     
-            console.log(data);
-    
             const response = await api.post('/login', data);
     
             localStorage.setItem('@application_user', JSON.stringify(response.data));

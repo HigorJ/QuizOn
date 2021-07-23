@@ -3,7 +3,7 @@ import { useParams, useHistory, Link } from 'react-router-dom';
 
 import api from '../../services/api.js';
 
-export default function ChangePassword() {
+export default function ResetPassword() {
 
     const history = useHistory();
     const { token } = useParams();
@@ -12,11 +12,11 @@ export default function ChangePassword() {
     const [password, setPassword] = useState('');
     const [error, setError] = useState('');
 
-    async function handleChangePassword(e) {
+    async function handleResetPassword(e) {
         e.preventDefault();
 
         try {
-            await api.post(`/changePassword/${token}`, {
+            await api.post(`/resetPassword/${token}`, {
                 email,
                 newPassword: password
             });
@@ -34,7 +34,7 @@ export default function ChangePassword() {
                 <p>Enter your new password :).</p>
             </div>
 
-            <form onSubmit={(e) => handleChangePassword(e)}>
+            <form onSubmit={(e) => handleResetPassword(e)}>
                 <h1>Change password</h1>
 
                 <div className="input-field">
@@ -64,7 +64,7 @@ export default function ChangePassword() {
 
                 <p className="error-message">{error}</p>
 
-                <button type="submit">Change password</button>
+                <button type="submit">Reset password</button>
 
                 <Link to="/" className="styled-link">Back to Login</Link>
             </form>

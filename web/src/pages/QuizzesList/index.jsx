@@ -1,17 +1,42 @@
-import React from 'react';
-import { useParams, Link, useHistory } from 'react-router-dom';
+import React, { useEffect, useState } from 'react';
+import { useParams, useHistory } from 'react-router-dom';
+import { FiCameraOff } from 'react-icons/fi';
 
 import Sidebar from '../../components/Sidebar';
 import Header from '../../components/Header';
 import FloatButton from '../../components/FloatButton';
+import api from '../../services/api';
 
 import './quizzes-list.css';
 
 export default function QuizList() {
 
-    let { title } = useParams();
+    let { id } = useParams();
     const history = useHistory();
-    const tempID = 1;
+
+    const [quizzes, setQuizzes] = useState([]);
+    const [error, setError] = useState([]);
+
+    useEffect(() => {
+        async function getInfo() {
+            try {
+                var response = [];
+
+                console.log(id)
+                if(!id) {
+                    response = await api.get('/quizzes');
+                } else {
+                    response = await api.get(`/quizzes/${id}`);
+                }
+    
+                setQuizzes(response.data);
+            } catch (error) {
+                setError(error);
+            }
+        }
+
+        getInfo();
+    }, [id]);
 
     return (
         <div id="container">
@@ -22,171 +47,23 @@ export default function QuizList() {
                 
                 <section>
                     <div className="content">
-                        <Link className="quizzes-titles" to={`/quizzes/${title}`}>
-                            { title }
-                        </Link>
-
                         <div className="items-list" style={{ flexWrap: 'wrap', overflowY: 'auto' }}>
-                            <div className="div-item" onClick={() => history.push(`/quizzes/all/${tempID}`)}>
-                                <img src="https://image.shutterstock.com/image-photo/hand-hospital-medical-expert-shows-600w-559764574.jpg" alt="Quiz do matrix" />
-                                <p>Quiz do Matrix</p>
-                            </div>
-
-                            <div className="div-item" onClick={() => history.push(`/quizzes/all/${tempID}`)}>
-                                <img src="https://image.shutterstock.com/image-photo/hand-hospital-medical-expert-shows-600w-559764574.jpg" alt="Quiz do matrix" />
-                                <p>Quiz do Matrix</p>
-                            </div>
-
-                            <div className="div-item" onClick={() => history.push(`/quizzes/all/${tempID}`)}>
-                                <img src="https://image.shutterstock.com/image-photo/hand-hospital-medical-expert-shows-600w-559764574.jpg" alt="Quiz do matrix" />
-                                <p>Quiz do Matrix</p>
-                            </div>
-
-                            <div className="div-item" onClick={() => history.push(`/quizzes/all/${tempID}`)}>
-                                <img src="https://image.shutterstock.com/image-photo/hand-hospital-medical-expert-shows-600w-559764574.jpg" alt="Quiz do matrix" />
-                                <p>Quiz do Matrix</p>
-                            </div>
-
-                            <div className="div-item" onClick={() => history.push(`/quizzes/all/${tempID}`)}>
-                                <img src="https://image.shutterstock.com/image-photo/hand-hospital-medical-expert-shows-600w-559764574.jpg" alt="Quiz do matrix" />
-                                <p>Quiz do Matrix</p>
-                            </div>
-
-                            <div className="div-item" onClick={() => history.push(`/quizzes/all/${tempID}`)}>
-                                <img src="https://image.shutterstock.com/image-photo/hand-hospital-medical-expert-shows-600w-559764574.jpg" alt="Quiz do matrix" />
-                                <p>Quiz do Matrix</p>
-                            </div>
-
-                            <div className="div-item" onClick={() => history.push(`/quizzes/all/${tempID}`)}>
-                                <img src="https://image.shutterstock.com/image-photo/hand-hospital-medical-expert-shows-600w-559764574.jpg" alt="Quiz do matrix" />
-                                <p>Quiz do Matrix</p>
-                            </div>
-
-                            <div className="div-item" onClick={() => history.push(`/quizzes/all/${tempID}`)}>
-                                <img src="https://image.shutterstock.com/image-photo/hand-hospital-medical-expert-shows-600w-559764574.jpg" alt="Quiz do matrix" />
-                                <p>Quiz do Matrix</p>
-                            </div>
-
-                            <div className="div-item" onClick={() => history.push(`/quizzes/all/${tempID}`)}>
-                                <img src="https://image.shutterstock.com/image-photo/hand-hospital-medical-expert-shows-600w-559764574.jpg" alt="Quiz do matrix" />
-                                <p>Quiz do Matrix</p>
-                            </div>
-
-                            <div className="div-item" onClick={() => history.push(`/quizzes/all/${tempID}`)}>
-                                <img src="https://image.shutterstock.com/image-photo/hand-hospital-medical-expert-shows-600w-559764574.jpg" alt="Quiz do matrix" />
-                                <p>Quiz do Matrix</p>
-                            </div>
-
-                            <div className="div-item" onClick={() => history.push(`/quizzes/all/${tempID}`)}>
-                                <img src="https://image.shutterstock.com/image-photo/hand-hospital-medical-expert-shows-600w-559764574.jpg" alt="Quiz do matrix" />
-                                <p>Quiz do Matrix</p>
-                            </div>
-
-                            <div className="div-item" onClick={() => history.push(`/quizzes/all/${tempID}`)}>
-                                <img src="https://image.shutterstock.com/image-photo/hand-hospital-medical-expert-shows-600w-559764574.jpg" alt="Quiz do matrix" />
-                                <p>Quiz do Matrix</p>
-                            </div>
-
-                            <div className="div-item" onClick={() => history.push(`/quizzes/all/${tempID}`)}>
-                                <img src="https://image.shutterstock.com/image-photo/hand-hospital-medical-expert-shows-600w-559764574.jpg" alt="Quiz do matrix" />
-                                <p>Quiz do Matrix</p>
-                            </div>
-
-                            <div className="div-item" onClick={() => history.push(`/quizzes/all/${tempID}`)}>
-                                <img src="https://image.shutterstock.com/image-photo/hand-hospital-medical-expert-shows-600w-559764574.jpg" alt="Quiz do matrix" />
-                                <p>Quiz do Matrix</p>
-                            </div>
-
-                            <div className="div-item" onClick={() => history.push(`/quizzes/all/${tempID}`)}>
-                                <img src="https://image.shutterstock.com/image-photo/hand-hospital-medical-expert-shows-600w-559764574.jpg" alt="Quiz do matrix" />
-                                <p>Quiz do Matrix</p>
-                            </div>
-
-                            <div className="div-item" onClick={() => history.push(`/quizzes/all/${tempID}`)}>
-                                <img src="https://image.shutterstock.com/image-photo/hand-hospital-medical-expert-shows-600w-559764574.jpg" alt="Quiz do matrix" />
-                                <p>Quiz do Matrix</p>
-                            </div>
-
-                            <div className="div-item" onClick={() => history.push(`/quizzes/all/${tempID}`)}>
-                                <img src="https://image.shutterstock.com/image-photo/hand-hospital-medical-expert-shows-600w-559764574.jpg" alt="Quiz do matrix" />
-                                <p>Quiz do Matrix</p>
-                            </div>
-
-                            <div className="div-item" onClick={() => history.push(`/quizzes/all/${tempID}`)}>
-                                <img src="https://image.shutterstock.com/image-photo/hand-hospital-medical-expert-shows-600w-559764574.jpg" alt="Quiz do matrix" />
-                                <p>Quiz do Matrix</p>
-                            </div>
-
-                            <div className="div-item" onClick={() => history.push(`/quizzes/all/${tempID}`)}>
-                                <img src="https://image.shutterstock.com/image-photo/hand-hospital-medical-expert-shows-600w-559764574.jpg" alt="Quiz do matrix" />
-                                <p>Quiz do Matrix</p>
-                            </div>
-
-                            <div className="div-item" onClick={() => history.push(`/quizzes/all/${tempID}`)}>
-                                <img src="https://image.shutterstock.com/image-photo/hand-hospital-medical-expert-shows-600w-559764574.jpg" alt="Quiz do matrix" />
-                                <p>Quiz do Matrix</p>
-                            </div>
-
-                            <div className="div-item" onClick={() => history.push(`/quizzes/all/${tempID}`)}>
-                                <img src="https://image.shutterstock.com/image-photo/hand-hospital-medical-expert-shows-600w-559764574.jpg" alt="Quiz do matrix" />
-                                <p>Quiz do Matrix</p>
-                            </div>
-
-                            <div className="div-item" onClick={() => history.push(`/quizzes/all/${tempID}`)}>
-                                <img src="https://image.shutterstock.com/image-photo/hand-hospital-medical-expert-shows-600w-559764574.jpg" alt="Quiz do matrix" />
-                                <p>Quiz do Matrix</p>
-                            </div>
-
-                            <div className="div-item" onClick={() => history.push(`/quizzes/all/${tempID}`)}>
-                                <img src="https://image.shutterstock.com/image-photo/hand-hospital-medical-expert-shows-600w-559764574.jpg" alt="Quiz do matrix" />
-                                <p>Quiz do Matrix</p>
-                            </div>
-
-                            <div className="div-item" onClick={() => history.push(`/quizzes/all/${tempID}`)}>
-                                <img src="https://image.shutterstock.com/image-photo/hand-hospital-medical-expert-shows-600w-559764574.jpg" alt="Quiz do matrix" />
-                                <p>Quiz do Matrix</p>
-                            </div>
-
-                            <div className="div-item" onClick={() => history.push(`/quizzes/all/${tempID}`)}>
-                                <img src="https://image.shutterstock.com/image-photo/hand-hospital-medical-expert-shows-600w-559764574.jpg" alt="Quiz do matrix" />
-                                <p>Quiz do Matrix</p>
-                            </div>
-
-                            <div className="div-item" onClick={() => history.push(`/quizzes/all/${tempID}`)}>
-                                <img src="https://image.shutterstock.com/image-photo/hand-hospital-medical-expert-shows-600w-559764574.jpg" alt="Quiz do matrix" />
-                                <p>Quiz do Matrix</p>
-                            </div>
-
-                            <div className="div-item" onClick={() => history.push(`/quizzes/all/${tempID}`)}>
-                                <img src="https://image.shutterstock.com/image-photo/hand-hospital-medical-expert-shows-600w-559764574.jpg" alt="Quiz do matrix" />
-                                <p>Quiz do Matrix</p>
-                            </div>
-
-                            <div className="div-item" onClick={() => history.push(`/quizzes/all/${tempID}`)}>
-                                <img src="https://image.shutterstock.com/image-photo/hand-hospital-medical-expert-shows-600w-559764574.jpg" alt="Quiz do matrix" />
-                                <p>Quiz do Matrix</p>
-                            </div>
-
-                            <div className="div-item" onClick={() => history.push(`/quizzes/all/${tempID}`)}>
-                                <img src="https://image.shutterstock.com/image-photo/hand-hospital-medical-expert-shows-600w-559764574.jpg" alt="Quiz do matrix" />
-                                <p>Quiz do Matrix</p>
-                            </div>
-
-                            <div className="div-item" onClick={() => history.push(`/quizzes/all/${tempID}`)}>
-                                <img src="https://image.shutterstock.com/image-photo/hand-hospital-medical-expert-shows-600w-559764574.jpg" alt="Quiz do matrix" />
-                                <p>Quiz do Matrix</p>
-                            </div>
-
-                            <div className="div-item" onClick={() => history.push(`/quizzes/all/${tempID}`)}>
-                                <img src="https://image.shutterstock.com/image-photo/hand-hospital-medical-expert-shows-600w-559764574.jpg" alt="Quiz do matrix" />
-                                <p>Quiz do Matrix</p>
-                            </div>
-
-                            <div className="div-item" onClick={() => history.push(`/quizzes/all/${tempID}`)}>
-                                <img src="https://image.shutterstock.com/image-photo/hand-hospital-medical-expert-shows-600w-559764574.jpg" alt="Quiz do matrix" />
-                                <p>Quiz do Matrix</p>
-                            </div>
+                            {quizzes.map(quiz => (
+                                <div key={quiz.quiz_id} className="div-item" onClick={() => history.push(`/quizzes/all/${quiz.quiz_id}`)}>
+                                    {quiz.quiz_photo === "" ? (
+                                        <div className="item-default-image">
+                                            <FiCameraOff size={48} color="#474747" />
+                                        </div>
+                                    ) : (
+                                        <img src={quiz.quiz_photo} alt={quiz.name} />
+                                    )}
+                                    
+                                    <p>{quiz.name}</p>
+                                </div>
+                            ))}
                         </div>
+
+                        <p className="error-message">{error}</p>
                     </div>
                 </section>
 

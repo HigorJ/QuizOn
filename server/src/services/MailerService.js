@@ -40,11 +40,11 @@ export default {
             throw new CommonError('Password and email are required!', 400);
         }
 
-        const userRepository = new UserRepository({ select: '*', where: { email } });
+        const userRepository = new UserRepository({ select: '*', where: { email, password_expires_token: token } });
         let user = await userRepository.findOne();
 
         if(!user) {
-            throw new CommonError('Invalid email!', 400);
+            throw new CommonError('Invalid Email or Token!', 400);
         }
 
         if(user.password_expires_token !== token) {

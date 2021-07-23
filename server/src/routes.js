@@ -13,7 +13,8 @@ var upload = multer({ storage: multerConfig });
 
 const routes = Router();
 
-routes.post('/login', AuthController.show);
+routes.post('/login', AuthController.login);
+routes.put('/changePassword', AuthController.changePassword)
 
 routes.get('/getUsers', UserController.index);
 routes.get('/getUser/:user_id', UserController.show);
@@ -35,6 +36,6 @@ routes.delete('/quiz/:quiz_id/:question_id', QuestionsController.delete);
 routes.get('/quiz/:quiz_id/questions/:question_id', AlternativesController.show);
 
 routes.post('/forgotPassword', MailerController.create);
-routes.post('/changePassword/:token', MailerController.update);
+routes.post('/resetPassword/:token', MailerController.update);
 
 export default routes;

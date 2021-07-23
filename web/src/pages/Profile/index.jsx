@@ -1,25 +1,28 @@
 import React, { useState, useEffect } from 'react';
 import { useHistory } from 'react-router-dom';
-import PhotoInput from '../../components/PhotoInput/index.jsx';
 
-import api from '../../services/api.js';
+import PhotoInput from '../../components/PhotoInput';
 import Sidebar from '../../components/Sidebar';
 import Header from '../../components/Header';
 import FloatButton from '../../components/FloatButton';
 
+import api from '../../services/api.js';
 import './profile.css';
 
 export default function Profile() {
     const history = useHistory();
 
-    const [photo, setPhoto] = useState("");
     const [user, setUser] = useState({});
-    const [name, setName] = useState("");
-    const [email, setEmail] = useState("");
-    const [password, setPassword] = useState("");
-    const [error, setError] = useState("");
+    const [photo, setPhoto] = useState('');
+    const [name, setName] = useState('');
+    const [email, setEmail] = useState('');
+    const [newPassword, setNewPassword] = useState('');
+    const [password, setPassword] = useState('');
+
     const [deleteAccount, setDeleteAccount] = useState(false);
     const [updateData, setUpdateData] = useState(false);
+    const [changePassword, setChangePassword] = useState(false);
+    const [error, setError] = useState('');
 
     useEffect(() => {
         function getUserInfo() {
@@ -30,12 +33,13 @@ export default function Profile() {
     }, []);
 
     async function handleUpdateInfo() {
-        try {
-            if(!updateData) {
-                setDeleteAccount(false);
-                return setUpdateData(true);
-            }
+        if(!updateData) {
+            setDeleteAccount(false);
+            setChangePassword(false);
+            return setUpdateData(true);
+        }
 
+        try {
             if(!name || !password || !email) {
                 return setError("All fields are required!");
             }
@@ -49,10 +53,6 @@ export default function Profile() {
     
             const response = await api.put(`/updateUser/${user.user_id}`, data);
     
-            if(!response.data) {
-                return setError(response);
-            }
-    
             localStorage.setItem("@application_user", JSON.stringify(response.data.newData));
     
             history.push('/lobby');
@@ -61,24 +61,49 @@ export default function Profile() {
         }
     }
 
-    async function handleDeleteAccount() {
+    async function handleChangePassword() {
+        if(!changePassword) {
+            setUpdateData(false);
+            setDeleteAccount(false);
+            return setChangePassword(true);
+        }
+
         try {
-            if(!deleteAccount) {
-                setUpdateData(false);
-                return setDeleteAccount(true);
+            if(!password || !newPassword) {
+                return setError("All fields are required!");
             }
 
-            const response = await api.delete(`/deleteUser/${user.user_id}`, {
+            await api.put('/changePassword', {
+                user_id: user.user_id,
+                password,
+                newPassword
+            });
+    
+            history.push('/lobby');
+        } catch (error) {
+            setError(error);
+        }
+    }
+
+    async function handleDeleteAccount() {
+        if(!deleteAccount) {
+            setUpdateData(false);
+            setChangePassword(false);
+            return setDeleteAccount(true);
+        }
+
+        try {
+            if(!password) {
+                return setEmail('Password is required!');
+            }
+
+            await api.delete(`/deleteUser/${user.user_id}`, {
                 data: {
-                    password: password
+                    password,
                 }
             });
 
-            if(!response.data) {
-                return setError(response);
-            }
-
-            localStorage.removeItem("@application_user");
+            localStorage.clear();
 
             history.push('/');
         } catch (error) {
@@ -97,7 +122,7 @@ export default function Profile() {
                     <div className="content">
                         <PhotoInput setPhoto={setPhoto} imageUrl={user.user_photo !== "" ? user.user_photo : null} />
 
-                        {!deleteAccount && (
+                        { (!deleteAccount && !changePassword) && (
                             <>
                                 <input 
                                     disabled={!updateData} 
@@ -106,7 +131,7 @@ export default function Profile() {
                                     value={name} 
                                     onChange={(e) => setName(e.target.value)} 
                                 />
-
+                    
                                 <input 
                                     type="email" 
                                     disabled={!updateData} 
@@ -115,25 +140,40 @@ export default function Profile() {
                                     value={email} 
                                     onChange={(e) => setEmail(e.target.value)} 
                                 />
+                    
                             </>
                         )}
 
-                        { (deleteAccount || updateData) && (
+                        { changePassword && (
+                            <>
+                                <input 
+                                    type="password" 
+                                    className="profile-input-field" 
+                                    placeholder="New password" 
+                                    value={newPassword} 
+                                    onChange={(e) => setNewPassword(e.target.value)}  
+                                />
+                            </>
+                        )}
+
+                        {(updateData || changePassword || deleteAccount) && (
                             <input 
                                 type="password" 
                                 className="profile-input-field" 
-                                placeholder="password verify" 
+                                placeholder="Password verify" 
                                 value={password} 
                                 onChange={(e) => setPassword(e.target.value)}  
                             />
                         )}
 
-                        <p className="error-message">{error}</p>
-
                         <div className="profile-buttons">
-                            <button onClick={handleUpdateInfo}>{ updateData ? "Update" : "Edit" }</button>
-                            <button className="delete-button" onClick={handleDeleteAccount}>Delete account :(</button>
+                            <button onClick={handleUpdateInfo}>{updateData ? "Confirm" : "Update data"}</button>
+                            <button onClick={handleChangePassword}>{changePassword ? "Confirm" : "Change Password"}</button>
+                            <button className="delete-button" onClick={handleDeleteAccount}>{deleteAccount ? "Confirm" : "Delete account :("}</button>
                         </div>
+
+                        
+                        <p className="error-message">{error}</p>
                     </div>
 
                     <FloatButton />

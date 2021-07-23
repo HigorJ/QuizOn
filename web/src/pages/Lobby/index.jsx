@@ -5,12 +5,13 @@ import socket from '../../services/socket.js';
 import Sidebar from '../../components/Sidebar';
 import Header from '../../components/Header';
 import FloatButton from '../../components/FloatButton';
-import QuizzesList from '../../components/QuizzesListComponent';
+import QuizzesListComponent from '../../components/QuizzesListComponent';
 import RoomsList from '../../components/RoomsListComponent';
 
 import '../../styles/pages.css';
 
 export default function Lobby() {
+    const [user, setUser] = useState({});
     const [allQuizzes, setAllQuizzes] = useState([]);
     const [yourQuizzes, setYourQuizzes] = useState([]);
     const [allRooms, setAllRooms] = useState({});
@@ -19,17 +20,14 @@ export default function Lobby() {
     useEffect(() => {
         async function getQuizInfo() {
             const user = JSON.parse(localStorage.getItem("@application_user"));
-
+            setUser(user);
+            
             socket.welcome(user.user_id);
             socket.onAllRooms(setAllRooms);
 
             try {
                 const AllQ = await api.get('/quizzes');
                 const YourQ = await api.get(`/quizzes/${user.user_id}`);
-
-                if(!AllQ.data || !YourQ.data) {
-                    return;
-                }
 
                 setAllQuizzes(AllQ.data);
                 setYourQuizzes(YourQ.data);
@@ -51,9 +49,9 @@ export default function Lobby() {
                 <section>
                     <RoomsList title="All Rooms" data={allRooms} />
 
-                    <QuizzesList title="All Quizzes" data={allQuizzes} />
+                    <QuizzesListComponent title="All Quizzes" data={allQuizzes} />
 
-                    <QuizzesList title="Your Quizzes" data={yourQuizzes} />
+                    <QuizzesListComponent title="Your Quizzes" data={yourQuizzes} user_id={user.user_id} />
 
                     <p className="error-message">{error}</p>
                 </section>

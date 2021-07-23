@@ -60,13 +60,12 @@ export default {
         return user;
     }, 
 
-    async update({ name, email, password }, id, file) {
+    async update({ name, email, password, newPassword }, id, file) {
         if(!id || !password) {
             throw new CommonError("ID and password are required!", 400);
         }
 
-        const userRepo = new UserRepository({ where: {"user_id": id}})
-
+        const userRepo = new UserRepository({ select: ['name', 'email', 'user_photo', 'password'], where: {"user_id": id}})
         let user = await userRepo.findOne();
 
         if(!user) {
@@ -76,17 +75,14 @@ export default {
         await passwordHash.checkHash(password, user.password);
 
         let newData = {
-            ...user,
             name: !name ? user.name : name,
             email: !email ? user.email : email,
-            user_photo: !file ? user.user_photo : file.filename
+            user_photo: !file ? user.user_photo : file.filename,
         }
 
         if(file) {
             deleteImage(user.user_photo);
         }
-        
-        delete newData.password;
 
         let updateResult = await userRepo.update(newData);
 
@@ -100,7 +96,7 @@ export default {
             throw new CommonError("ID and password are required!", 400);
         }
 
-        const userRepo = new UserRepository({ where: {"user_id": id}});
+        const userRepo = new UserRepository({ select: ['user_photo', 'password'], where: {"user_id": id}});
         let user = await userRepo.findOne()
 
         if(!user) {

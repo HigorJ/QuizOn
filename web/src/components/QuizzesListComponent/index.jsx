@@ -2,13 +2,13 @@ import React from 'react';
 import { Link, useHistory } from 'react-router-dom';
 import { FiCameraOff } from 'react-icons/fi';
 
-export default function QuizzesList({ title, data }) {
+export default function QuizzesListComponent({ title, data, user_id }) {
     const history = useHistory();
     
     return (
         <div className="list-content">
             {data.length > 0 && (
-                <Link className="items-list-title" to={`/quizzes/${title.replace(' ', '-').toLowerCase()}`}>
+                <Link className="items-list-title" to={`/quizzes/${!user_id ? "" : user_id}`}>
                     {title}
                 </Link>
             )}
