@@ -3,7 +3,7 @@ import QuestionService from '../services/QuestionService.js';
 export default {
     async create(req, res, next) {
         try {
-            const response = await QuestionService.create(req.body, req.params);
+            const response = await QuestionService.create(req.body, req.params, req.headers);
 
             return res.status(200).json(response);
         } catch (error) {
@@ -13,7 +13,7 @@ export default {
 
     async show(req, res, next) {
         try {
-            const response = await QuestionService.show(req.params);
+            const response = await QuestionService.show(req.params, req.headers);
 
             return res.status(200).json(response);
         } catch (error) {
@@ -23,7 +23,7 @@ export default {
 
     async update(req, res, next) {
         try {
-            const response = await QuestionService.update(req.body, req.params);
+            const response = await QuestionService.update(req.body, req.params, req.headers);
 
             return res.status(200).json(response);
         } catch (error) {
@@ -33,7 +33,7 @@ export default {
 
     async delete(req, res, next) {
         try {
-            const response = await QuestionService.delete(req.params);
+            const response = await QuestionService.delete(req.params, req.headers);
 
             return res.status(200).json(response);
         } catch (error) {

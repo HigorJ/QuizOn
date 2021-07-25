@@ -26,8 +26,8 @@ export default function RoomsListComponent({ title, data }) {
 
     return (
         <div className="list-content">
-            {data.length > 0 && (
-                <Link className="items-list-title" to={`/quizzes/${title.replace(' ', '-').toLowerCase()}`}>
+            {Object.keys(data).length > 0 && (
+                <Link className="items-list-title" to={`/rooms`}>
                     {title}
                 </Link>
             )}

@@ -25,15 +25,14 @@ export default function Quiz() {
     const [checkToNextQuestion, setCheckToNextQuestion] = useState(false);
 
     const toNextQuestion = useCallback(() => {
-        setCurrentQuestion(currentQuestion + 1);
-
-        if(currentQuestion >= questions.length - 1) {
+        if(currentQuestion < questions.length - 1) {
+            setCurrentQuestion(currentQuestion + 1);
+            setTimer(20);
+            setWasAnswered(false);
+            setCheckToNextQuestion(false);
+        } else {
             setEnd(true);
         }
-
-        setTimer(20);
-        setWasAnswered(false);
-        setCheckToNextQuestion(false);
     }, [currentQuestion, questions.length]);
 
     useEffect(() => {
@@ -47,18 +46,21 @@ export default function Quiz() {
                 }
 
                 setQuestions(response.data);
-                socket.onToNextQuestion(setCheckToNextQuestion);
 
-                if(checkToNextQuestion) {
-                    toNextQuestion();
-                }
+                socket.onToNextQuestion(setCheckToNextQuestion);
             } catch (error) {
                 setError(error)
             }
         }
 
         getQuizInfo();
-    }, [id, toNextQuestion, checkToNextQuestion]);    
+    }, [id]);    
+
+    useEffect(() => {
+        if(checkToNextQuestion) {
+            toNextQuestion();
+        }
+    }, [checkToNextQuestion, toNextQuestion]);
 
     useEffect(() => {
         async function getAlternatives() {
@@ -145,7 +147,7 @@ export default function Quiz() {
                             <QuizEnd score={score} room={room} user_id={user.user_id} />
                         )}
 
-                        {(questions.length > 0 && currentQuestion < questions.length) && (
+                        {(questions.length > 0 && !end) && (
                             <>
                                 <h1 className="quiz-question-title">{questions[currentQuestion].question_text}</h1>
             

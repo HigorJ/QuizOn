@@ -1,8 +1,11 @@
 import CommonError from "../errors/CommonError.js";
 import AlternativeRepository from "../repositories/AlternativeRepository.js";
+import jwt from "../utils/jwt.js";
 
 export default {
-    async show({ quiz_id, question_id }) {
+    async show({ quiz_id, question_id }, { token }) {
+        jwt.checkToken(token);
+
         if(!quiz_id) {
             throw new CommonError("Quiz id is required!", 400);
         }

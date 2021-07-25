@@ -23,6 +23,7 @@ export default function Lobby() {
             setUser(user);
             
             socket.welcome(user.user_id);
+            socket.getRooms();
             socket.onAllRooms(setAllRooms);
 
             try {

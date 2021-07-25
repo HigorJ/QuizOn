@@ -2,9 +2,12 @@ import QuizRepository from '../repositories/QuizRepository.js';
 import CommonError from '../errors/CommonError.js';
 import deleteImage from '../utils/DeleteImage.js';
 import photoUrl from '../utils/PhotoUrl.js';
+import jwt from '../utils/jwt.js';
 
 export default {
-    async index({ id }) {
+    async index({ id }, { token }) {
+        jwt.checkToken(token);
+
         const quizRepo = new QuizRepository({ select: "*", where: { author: id } });
 
         var allQuizzes = await quizRepo.findAll();
@@ -18,7 +21,9 @@ export default {
         return allQuizzes;
     },
 
-    async create({ name, description }, { user_id }, file = { filename: '' }) {
+    async create({ name, description }, { user_id, token }, file = { filename: '' }) {
+        jwt.checkToken(token);
+
         if(!name || !description) {
             deleteImage(file.filename);
             throw new CommonError("All fields are required", 400);
@@ -36,7 +41,9 @@ export default {
         return result;
     },
 
-    async show({ id }) {
+    async show({ id }, { token }) {
+        jwt.checkToken(token);
+
         if(!id) {
             throw new CommonError("ID is required!", 400);
         }
@@ -54,7 +61,9 @@ export default {
         return quiz;
     }, 
 
-    async update({ name, description }, { id }, { user_id }, file) {
+    async update({ name, description }, { id }, { user_id, token }, file) {
+        jwt.checkToken(token);
+
         if(!id || !user_id) {
             throw new CommonError("ID is required!", 400);
         }
@@ -84,7 +93,9 @@ export default {
         return result;
     },
 
-    async delete({ id }, { user_id }) {
+    async delete({ id }, { user_id, token }) {
+        jwt.checkToken(token);
+        
         if(!id || !user_id) {
             throw new CommonError("ID is required!", 400);
         }

@@ -3,9 +3,13 @@ import UserRepository from '../repositories/UserRepository.js';
 import CommonError from '../errors/CommonError.js';
 import deleteImage from '../utils/DeleteImage.js';
 import photoUrl from '../utils/PhotoUrl.js';
+import jwt from '../utils/jwt.js';
 
 export default {
-    async index() {
+    async index({ token }) {
+
+        jwt.checkToken(token);
+
         const userRepo = new UserRepository({});
         var users = await userRepo.findAll();
 
@@ -43,7 +47,9 @@ export default {
         return { message: "Successfully" };
     },
 
-    async show({ user_id }) {
+    async show({ user_id }, { token }) {
+        jwt.checkToken(token);
+
         if(!user_id) {
             throw new CommonError("Email and Password are required!", 400);
         }
@@ -60,7 +66,9 @@ export default {
         return user;
     }, 
 
-    async update({ name, email, password, newPassword }, id, file) {
+    async update({ name, email, password, newPassword }, id, file, { token }) {
+        jwt.checkToken(token);
+
         if(!id || !password) {
             throw new CommonError("ID and password are required!", 400);
         }
@@ -91,7 +99,9 @@ export default {
         return { updateResult, newData };
     }, 
 
-    async delete(password, id) {
+    async delete(password, id, { token }) {
+        jwt.checkToken(token);
+
         if(!id || !password) {
             throw new CommonError("ID and password are required!", 400);
         }

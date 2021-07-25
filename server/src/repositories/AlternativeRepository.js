@@ -27,10 +27,10 @@ class AlternativeRepository {
     async update(alternatives, question_source_id) {
         return await Promise.all(alternatives.map(async (alternative) => {
             await knex(this.tableName)
-                    .update({ ...alternative, question_source_id })
+                    .update({ ...alternative })
                     .where({
                         'alternative_id': alternative.alternative_id,
-                    });
+                    }).andWhere('question_source_id', question_source_id);
         }));
     }
 }

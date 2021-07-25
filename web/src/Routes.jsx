@@ -8,6 +8,7 @@ import ResetPassword from './pages/ResetPassword';
 import Lobby from './pages/Lobby';
 import Profile from './pages/Profile';
 import QuizzesList from './pages/QuizzesList';
+import QuizzesRooms from './pages/QuizzesRooms';
 import QuizInfo from './pages/QuizInfo';
 import PreparationPage from './pages/PreparetionPage';
 import Quiz from './pages/Quiz';
@@ -26,6 +27,7 @@ export default function Routes() {
         <Route path="/lobby" exact component={Lobby} />
         <Route path="/profile" exact component={Profile} />
         <Route path="/quizzes/:id?" exact component={QuizzesList} />
+        <Route path="/rooms" exact component={QuizzesRooms} />
         <Route path="/quizzes/all/:id" exact component={QuizInfo} />
         <Route path="/quizzes/all/:id/:room/waiting-participants" exact component={PreparationPage} />
         <Route path="/quizzes/all/:id/:room" exact component={Quiz} />

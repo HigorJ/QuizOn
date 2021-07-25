@@ -1,11 +1,12 @@
 import React, { useEffect, useState } from 'react';
-import { Link, useHistory } from 'react-router-dom';
+import { useHistory, useParams } from 'react-router-dom';
 import socket from '../../services/socket';
 
 import './sidebar.css';
 
 export default function Sidebar() {
     const history = useHistory();
+    const { room } = useParams();
 
     const [user, setUser] = useState('');
     const [quizId, setQuizId] = useState('');
@@ -18,7 +19,7 @@ export default function Sidebar() {
 
         getInfo();
 
-        socket.onQuizId(setQuizId);
+        socket.onRoomId(setQuizId);
     }, []);
 
     useEffect(() => {
@@ -34,13 +35,28 @@ export default function Sidebar() {
             name: user.name,
             user_photo: user.user_photo
         });
+
+        socket.getRoomId({
+            room_name: roomName
+        });
+    }
+
+    function handleExit() {
+        if(room) {
+            socket.participantLeft({
+                user_id: user.user_id,
+                room_name: room
+            });
+        }
+
+        history.push('/lobby')
     }
 
     return (
         <aside>
-            <Link to="/lobby" className="link">
+            <div onClick={() => handleExit()} className="link">
                 <h1>QuizOn</h1>
-            </Link>
+            </div>
 
             <div className="room-name">
                 <p>Do you have any code?</p>

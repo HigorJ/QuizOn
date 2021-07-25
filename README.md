@@ -8,11 +8,8 @@
  - [X] SocketIO para criar salas e ter funcionalidades online.
  - [X] Recuperar senha.
  - [X] Mudar senha de um usuário.
- - [X] Página que mostra todos os quizzes, seus quizzes.
- - [ ] Página que mostra todas as salas.
- - [ ] JWT.
- 
-
+ - [X] Página que mostra todos os quizzes, seus quizzes e as salas.
+ - [X] JWT.
 
 ## Tecnologias
 - Backend

@@ -3,9 +3,12 @@ import QuesitonRepository from "../repositories/QuestionRepository.js";
 import AlternativeRepository from "../repositories/AlternativeRepository.js";
 import CommonError from '../errors/CommonError.js';
 import InternalError from '../errors/InternalError.js';
+import jwt from '../utils/jwt.js';
 
 export default {
-    async create({ question_text, alternatives }, { quiz_id: quiz_source_id }) {
+    async create({ question_text, alternatives }, { quiz_id: quiz_source_id }, { token }) {
+        jwt.checkToken(token);
+
         if(!question_text || !quiz_source_id || ![alternatives]) {
             throw new CommonError("All fields are required!", 400);
         }
@@ -33,7 +36,9 @@ export default {
         return data;
     }, 
 
-    async show({ quiz_id: quiz_source_id }) {
+    async show({ quiz_id: quiz_source_id }, { token }) {
+        jwt.checkToken(token);
+
         if(!quiz_source_id) {
             throw new CommonError("Quizz id is required!", 400);
         }
@@ -45,12 +50,14 @@ export default {
         return result;
     },
 
-    async update({ question_text, alternatives }, { quiz_id, question_id }) {
+    async update({ question_text, alternatives }, { quiz_id, question_id }, { token }) {
+        jwt.checkToken(token);
+
         if(!alternatives[0].alternative_id || !question_text || !quiz_id || !question_id) {
             throw new CommonError("All fields are required!", 400);
         }
 
-        QuizService.show({ id: quiz_id });
+        QuizService.show({ id: quiz_id }, { token });
 
         const questionRepo = new QuesitonRepository({ where: { 'question_id': question_id }});
         const altRepo = new AlternativeRepository({});
@@ -66,7 +73,9 @@ export default {
         return { message: "Successfully" };
     },
 
-    async delete({ quiz_id, question_id }) {
+    async delete({ quiz_id, question_id }, { token }) {
+        jwt.checkToken(token);
+        
         const questionRepo = new QuesitonRepository({ where: { 'question_id': question_id }});
         const result = await questionRepo.delete({ quiz_source_id: quiz_id });
 

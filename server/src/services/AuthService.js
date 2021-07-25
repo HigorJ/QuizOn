@@ -2,6 +2,7 @@ import passwordHash from '../utils/PasswordEncrypt.js';
 import UserRepository from '../repositories/UserRepository.js';
 import CommonError from '../errors/CommonError.js';
 import photoUrl from '../utils/PhotoUrl.js';
+import jwt from '../utils/jwt.js';
 
 export default {
     async login({ email, password }) {
@@ -21,11 +22,15 @@ export default {
         delete user.password;
 
         user.user_photo = photoUrl(user.user_photo);
+
+        const token = jwt.generate(user.user_id);
         
-        return user;
+        return { user, token };
     },
 
-    async changePassword({ user_id, password, newPassword }) {
+    async changePassword({ user_id, password, newPassword }, { token }) {
+        jwt.checkToken(token);
+
         const userRepo = new UserRepository({ select: ['user_id', 'password'], where: {user_id: user_id} });
         const user = await userRepo.findOne();
 

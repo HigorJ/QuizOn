@@ -7,8 +7,6 @@ import Header from '../../components/Header';
 import FloatButton from '../../components/FloatButton';
 import api from '../../services/api';
 
-import './quizzes-list.css';
-
 export default function QuizList() {
 
     let { id } = useParams();
@@ -22,7 +20,6 @@ export default function QuizList() {
             try {
                 var response = [];
 
-                console.log(id)
                 if(!id) {
                     response = await api.get('/quizzes');
                 } else {

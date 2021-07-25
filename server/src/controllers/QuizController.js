@@ -3,7 +3,7 @@ import QuizService from '../services/QuizService.js';
 export default {
     async index(req, res, next) {
         try {
-            const response = await QuizService.index(req.params);
+            const response = await QuizService.index(req.params, req.headers);
 
             res.status(200).json(response);
         } catch (error) {
@@ -23,7 +23,7 @@ export default {
 
     async show(req, res, next) {
         try {
-            const response = await QuizService.show(req.params);
+            const response = await QuizService.show(req.params, req.headers);
 
             res.status(200).json(response);
         } catch (error) {

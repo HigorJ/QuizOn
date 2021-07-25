@@ -142,7 +142,11 @@ export default function CreateQuestions() {
     }
 
     async function handleSubmitQuiz() {
-        handleCreateQuestion();
+        if(checkCorrects() !== 1) {
+            return setError("Choose one alternative to be correct.");
+        }
+
+        await handleCreateQuestion();
 
         history.push('/lobby');
     }

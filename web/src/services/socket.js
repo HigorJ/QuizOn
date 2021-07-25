@@ -9,9 +9,23 @@ const events = {
         });
     },
 
+    getRooms() {
+        socket.emit('get-rooms');
+    },
+
     onAllRooms(setRooms) {
         socket.on('all-rooms', (data) => {
-            setRooms(data.rooms)
+            setRooms(data.rooms);
+        })
+    },
+
+    getRoomId(data) {
+        socket.emit('get-room-id', data);
+    },
+
+    onRoomId(setQuizId) {
+        socket.on('room-id', (data) => {
+            setQuizId(data.quiz_id);
         });
     },
 
@@ -29,12 +43,6 @@ const events = {
 
     joinRoom(joinData) {
         socket.emit('join-quiz-room', joinData);
-    },
-
-    onQuizId(setQuizId) {
-        socket.on('room-quiz-id', (data) => {
-            setQuizId(data.quiz_id);
-        });
     },
 
     getParticipants(room_name) {

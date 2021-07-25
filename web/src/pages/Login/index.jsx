@@ -20,7 +20,8 @@ export default function Login() {
     
             const response = await api.post('/login', data);
     
-            localStorage.setItem('@application_user', JSON.stringify(response.data));
+            localStorage.setItem('@application_user', JSON.stringify(response.data.user));
+            localStorage.setItem('@application_token', response.data.token);
             
             history.push('/lobby');
         } catch (error) {

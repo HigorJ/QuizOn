@@ -19,6 +19,7 @@ export default function Header({ onProfile }) {
 
     function handleLogout() {
         localStorage.removeItem("@application_user");
+        localStorage.removeItem("@application_token");
 
         history.push('/');
     }

@@ -3,7 +3,7 @@ import UserService from '../services/UserService.js';
 export default {
     async index(req, res, next) {
         try {
-            const response = await UserService.index();
+            const response = await UserService.index(req.headers);
 
             return res.status(200).json(response);
         } catch (error) {
@@ -23,7 +23,7 @@ export default {
 
     async show(req, res, next) {
         try {
-            const response = await UserService.show(req.params);
+            const response = await UserService.show(req.params, req.headers);
 
             return res.status(200).json(response);
         } catch (error) {
@@ -33,7 +33,7 @@ export default {
 
     async update(req, res, next) {
         try {
-            const response = await UserService.update(req.body, req.params.id, req.file);
+            const response = await UserService.update(req.body, req.params.id, req.file, req.headers);
 
             return res.status(200).json(response);
         } catch (error) {
@@ -44,7 +44,7 @@ export default {
     async delete(req, res, next) {
 
         try {
-            const response = await UserService.delete(req.body.password, req.params.id)
+            const response = await UserService.delete(req.body.password, req.params.id, req.headers)
 
             return res.status(200).json(response);
         } catch (error) {

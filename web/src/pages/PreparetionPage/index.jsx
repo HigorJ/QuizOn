@@ -75,6 +75,7 @@ export default function PreparationPage() {
 
                 <section>
                     <h1 className="preparation-room-title">Invite your friends :)</h1>
+                    
                     <div className="content" style={{ flexDirection: 'row' }}>
                         {
                         participants.map(participant => (

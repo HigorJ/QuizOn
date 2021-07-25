@@ -13,7 +13,7 @@ export default {
 
     async changePassword(req, res, next) {
         try {
-            const response = await AuthService.changePassword(req.body);
+            const response = await AuthService.changePassword(req.body, req.headers);
 
             return res.status(200).json(response);
         } catch (error) {

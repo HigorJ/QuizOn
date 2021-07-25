@@ -15,10 +15,6 @@ export function events(io) {
             if(!users[data.user_id]) {    
                 users[socket.id] = data.user_id;
             }
-
-            socket.emit('all-rooms', {
-                rooms
-            });
         });
 
         socket.on("disconnect", () => {
@@ -45,6 +41,12 @@ export function events(io) {
             socket.join(data.room_name);
         });
 
+        socket.on('get-rooms', () => {
+            socket.emit('all-rooms', {
+                rooms
+            });
+        })
+
         socket.on('join-quiz-room', (data) => {
             if(rooms[data.room_name]) {
                 let user = {
@@ -56,14 +58,9 @@ export function events(io) {
                     answered: false
                 }
 
-                rooms[data.room_name].users.push(user);
+                rooms[data.room_name].users.push(user);                
         
                 socket.join(data.room_name);
-        
-                socket.emit('room-quiz-id', {
-                    quiz_id: rooms[data.room_name].quiz_id,
-                    participants: rooms[data.room_name].users
-                });
 
                 socket.to(data.room_name).emit('new-participant', {
                     user
@@ -71,6 +68,12 @@ export function events(io) {
             } else {
                 console.log('Sala não existe!');
             }
+        });
+
+        socket.on('get-room-id', (data) => {
+            socket.emit('room-id', {
+                quiz_id: rooms[data.room_name].quiz_id,
+            });
         });
 
         socket.on('get-participants', (data) => {
